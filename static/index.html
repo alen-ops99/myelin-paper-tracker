@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Myelin Paper - Project Tracker</title>
+    <style>
+        :root {
+            --navy: #0f1c2e;
+            --navy-light: #1a2d44;
+            --gold: #C9A962;
+            --cream: #FAF8F5;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --muted: #6b7280;
+            --chat-user: #dbeafe;
+            --chat-ai: #f3f4f6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--cream);
+            color: var(--navy);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            min-width: 0;
+        }
+
+        .main-header {
+            background: var(--navy);
+            color: white;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .main-header h1 {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-item .number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .stat-item .label {
+            font-size: 0.625rem;
+            text-transform: uppercase;
+            opacity: 0.7;
+        }
+
+        .progress-mini {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .progress-mini .bar {
+            width: 100px;
+            height: 6px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-mini .fill {
+            height: 100%;
+            background: var(--gold);
+            transition: width 0.3s;
+        }
+
+        .progress-mini .text {
+            font-size: 0.75rem;
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .action-bar {
+            background: white;
+            padding: 0.75rem 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--navy);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--navy-light);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #d1d5db;
+            color: var(--navy);
+        }
+
+        .btn-outline:hover {
+            background: #f3f4f6;
+        }
+
+        .view-toggle {
+            margin-left: auto;
+            display: flex;
+            gap: 0.25rem;
+            background: #f3f4f6;
+            padding: 0.25rem;
+            border-radius: 6px;
+        }
+
+        .view-btn {
+            padding: 0.375rem 0.75rem;
+            border: none;
+            background: none;
+            font-size: 0.75rem;
+            cursor: pointer;
+            border-radius: 4px;
+            color: var(--muted);
+        }
+
+        .view-btn.active {
+            background: white;
+            color: var(--navy);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        /* Task Grid */
+        .tasks-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+
+        .weeks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .week-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow: hidden;
+            transition: box-shadow 0.2s;
+        }
+
+        .week-card.current {
+            box-shadow: 0 0 0 2px var(--gold), 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .week-card.drag-over {
+            box-shadow: 0 0 0 2px var(--success), 0 4px 12px rgba(0,0,0,0.15);
+            background: #f0fdf4;
+        }
+
+        .week-header {
+            background: var(--navy);
+            color: white;
+            padding: 0.75rem 1rem;
+        }
+
+        .week-card.current .week-header {
+            background: linear-gradient(135deg, var(--navy), var(--navy-light));
+        }
+
+        .week-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .week-title {
+            font-weight: 600;
+            font-size: 0.9375rem;
+        }
+
+        .week-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 0.125rem 0.5rem;
+            border-radius: 10px;
+            font-size: 0.6875rem;
+        }
+
+        .week-card.current .week-badge {
+            background: var(--gold);
+            color: var(--navy);
+        }
+
+        .week-dates {
+            font-size: 0.6875rem;
+            opacity: 0.7;
+            margin-top: 0.25rem;
+        }
+
+        .week-tasks {
+            padding: 0.5rem;
+            min-height: 80px;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.625rem;
+            padding: 0.625rem;
+            border-radius: 6px;
+            transition: all 0.2s;
+            cursor: grab;
+            border: 1px solid transparent;
+        }
+
+        .task-item:hover {
+            background: #f9fafb;
+            border-color: #e5e7eb;
+        }
+
+        .task-item.completed {
+            opacity: 0.5;
+        }
+
+        .task-item.dragging {
+            opacity: 0.5;
+            cursor: grabbing;
+        }
+
+        .task-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-top: 1px;
+            cursor: pointer;
+            accent-color: var(--success);
+            flex-shrink: 0;
+        }
+
+        .task-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .task-title {
+            font-size: 0.8125rem;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .task-item.completed .task-title {
+            text-decoration: line-through;
+            color: var(--muted);
+        }
+
+        .task-meta {
+            display: flex;
+            gap: 0.375rem;
+            margin-top: 0.25rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .task-badge {
+            font-size: 0.5625rem;
+            padding: 0.125rem 0.375rem;
+            border-radius: 3px;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: white;
+        }
+
+        .badge-critical { background: var(--danger); }
+        .badge-high { background: var(--warning); }
+        .badge-fig { background: var(--navy-light); }
+
+        .task-edit-btn {
+            background: none;
+            border: none;
+            color: var(--muted);
+            cursor: pointer;
+            padding: 0.25rem;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .task-item:hover .task-edit-btn {
+            opacity: 1;
+        }
+
+        .task-edit-btn:hover {
+            color: var(--navy);
+        }
+
+        /* Edit Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 450px;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(20px);
+            transition: transform 0.2s;
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            padding: 1.25rem;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--muted);
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            color: var(--navy);
+        }
+
+        .modal-body {
+            padding: 1.25rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 0.375rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.625rem 0.875rem;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 0.9375rem;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .modal-footer {
+            padding: 1rem 1.25rem;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            gap: 0.75rem;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #16a34a;
+        }
+
+        /* Chat Sidebar */
+        .chat-sidebar {
+            width: 320px;
+            background: white;
+            border-left: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+
+        .chat-sidebar.collapsed {
+            width: 48px;
+        }
+
+        .chat-header {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--navy);
+            color: white;
+        }
+
+        .chat-header h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .chat-toggle {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 0.25rem;
+            opacity: 0.7;
+        }
+
+        .chat-toggle:hover {
+            opacity: 1;
+        }
+
+        .chat-sidebar.collapsed .chat-header {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            padding: 1rem 0.75rem;
+        }
+
+        .chat-sidebar.collapsed .chat-header h3 {
+            transform: rotate(180deg);
+        }
+
+        .chat-sidebar.collapsed .chat-content,
+        .chat-sidebar.collapsed .chat-input-container {
+            display: none;
+        }
+
+        .chat-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0.75rem;
+        }
+
+        .chat-welcome {
+            background: linear-gradient(135deg, var(--navy), var(--navy-light));
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            font-size: 0.8125rem;
+        }
+
+        .chat-welcome h4 {
+            color: var(--gold);
+            margin-bottom: 0.25rem;
+            font-size: 0.875rem;
+        }
+
+        .chat-message {
+            margin-bottom: 0.75rem;
+        }
+
+        .chat-message.user {
+            text-align: right;
+        }
+
+        .message-bubble {
+            display: inline-block;
+            max-width: 90%;
+            padding: 0.625rem 0.875rem;
+            border-radius: 12px;
+            font-size: 0.8125rem;
+            line-height: 1.5;
+            text-align: left;
+        }
+
+        .chat-message.user .message-bubble {
+            background: var(--chat-user);
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-message.assistant .message-bubble {
+            background: var(--chat-ai);
+            border-bottom-left-radius: 4px;
+        }
+
+        .message-bubble p { margin-bottom: 0.5rem; }
+        .message-bubble p:last-child { margin-bottom: 0; }
+        .message-bubble strong { color: var(--navy); }
+
+        .chat-input-container {
+            padding: 0.75rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .quick-prompts {
+            display: flex;
+            gap: 0.375rem;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .quick-prompt {
+            padding: 0.25rem 0.5rem;
+            background: #f3f4f6;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 0.625rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .quick-prompt:hover {
+            background: var(--navy);
+            color: white;
+            border-color: var(--navy);
+        }
+
+        .chat-input-row {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 0.5rem 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 0.8125rem;
+            resize: none;
+            min-height: 36px;
+            max-height: 80px;
+            font-family: inherit;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        .send-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: var(--navy);
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .send-btn:hover { background: var(--navy-light); }
+        .send-btn:disabled { background: #d1d5db; }
+
+        .typing-indicator {
+            display: flex;
+            gap: 3px;
+            padding: 0.5rem;
+        }
+
+        .typing-indicator span {
+            width: 6px;
+            height: 6px;
+            background: var(--muted);
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Figures View */
+        .figures-view { display: none; }
+        .figures-view.active { display: block; }
+
+        .figures-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .figure-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.25rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .figure-card h3 {
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .figure-status {
+            font-size: 0.6875rem;
+            padding: 0.25rem 0.625rem;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .status-complete { background: #dcfce7; color: #166534; }
+        .status-in_progress { background: #fef3c7; color: #92400e; }
+        .status-partial { background: #dbeafe; color: #1e40af; }
+        .status-not_started { background: #f3f4f6; color: #6b7280; }
+
+        .panel-list { list-style: none; }
+
+        .panel-item {
+            display: flex;
+            align-items: center;
+            padding: 0.375rem 0;
+            font-size: 0.8125rem;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .panel-item:last-child { border-bottom: none; }
+
+        .panel-icon {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            margin-right: 0.625rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.625rem;
+            flex-shrink: 0;
+        }
+
+        .panel-done { background: var(--success); color: white; }
+        .panel-pending { background: #e5e7eb; }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .app-container { flex-direction: column; }
+            .chat-sidebar {
+                width: 100%;
+                height: 40vh;
+                border-left: none;
+                border-top: 1px solid #e5e7eb;
+            }
+            .chat-sidebar.collapsed {
+                width: 100%;
+                height: 48px;
+            }
+            .chat-sidebar.collapsed .chat-header {
+                writing-mode: horizontal-tb;
+                padding: 0.75rem 1rem;
+            }
+            .chat-sidebar.collapsed .chat-header h3 { transform: none; }
+            .weeks-grid { grid-template-columns: 1fr; }
+            .header-stats { display: none; }
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="main-header">
+                <h1>Myelin & Sleep Loss Paper</h1>
+                <div class="header-stats">
+                    <div class="stat-item">
+                        <div class="number" id="daysLeft">--</div>
+                        <div class="label">Days Left</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="number" id="currentWeek">1</div>
+                        <div class="label">Week</div>
+                    </div>
+                    <div class="progress-mini">
+                        <div class="bar"><div class="fill" id="progressBar" style="width:0%"></div></div>
+                        <div class="text"><span id="progressPercent">0</span>%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-bar">
+                <button class="btn btn-primary" onclick="autoAdjust()">Auto-Adjust</button>
+                <button class="btn btn-outline" onclick="addNewTask()">+ Add Task</button>
+                <button class="btn btn-outline" onclick="addWeek()">+ Add Week</button>
+                <div class="view-toggle">
+                    <button class="view-btn active" onclick="switchView('tasks')">Tasks</button>
+                    <button class="view-btn" onclick="switchView('figures')">Figures</button>
+                </div>
+            </div>
+
+            <div class="tasks-container">
+                <div class="tasks-view" id="tasksView">
+                    <div class="weeks-grid" id="weeksGrid"></div>
+                </div>
+                <div class="figures-view" id="figuresView">
+                    <div class="figures-grid">
+                        <div class="figure-card">
+                            <h3>Figure 1: EM Phenotype <span class="figure-status status-complete">Complete</span></h3>
+                            <ul class="panel-list">
+                                <li class="panel-item"><span class="panel-icon panel-done">✓</span> EM: Non-SD vs SD</li>
+                                <li class="panel-item"><span class="panel-icon panel-done">✓</span> Myelinated axon counts</li>
+                                <li class="panel-item"><span class="panel-icon panel-done">✓</span> Myelin debris</li>
+                            </ul>
+                        </div>
+                        <div class="figure-card">
+                            <h3>Figure 2: Proteins + Lipids <span class="figure-status status-in_progress">In Progress</span></h3>
+                            <ul class="panel-list">
+                                <li class="panel-item"><span class="panel-icon panel-done">✓</span> EM decompaction</li>
+                                <li class="panel-item"><span class="panel-icon panel-done">✓</span> PLP Western blot</li>
+                                <li class="panel-item"><span class="panel-icon panel-pending"></span> MAG quantification</li>
+                                <li class="panel-item"><span class="panel-icon panel-done">✓</span> MBP ELISA</li>
+                                <li class="panel-item"><span class="panel-icon panel-pending"></span> Mass spectrometry</li>
+                            </ul>
+                        </div>
+                        <div class="figure-card">
+                            <h3>Figure 3: Cellular Response <span class="figure-status status-not_started">Not Started</span></h3>
+                            <ul class="panel-list">
+                                <li class="panel-item"><span class="panel-icon panel-done">✓</span> Dark microglia</li>
+                                <li class="panel-item"><span class="panel-icon panel-pending"></span> Olig2/CC1 IHC</li>
+                                <li class="panel-item"><span class="panel-icon panel-pending"></span> DegeneroTag</li>
+                            </ul>
+                        </div>
+                        <div class="figure-card">
+                            <h3>Figure 4: Recovery Failure <span class="figure-status status-partial">Partial</span></h3>
+                            <ul class="panel-list">
+                                <li class="panel-item"><span class="panel-icon panel-done">✓</span> Recovery EM</li>
+                                <li class="panel-item"><span class="panel-icon panel-pending"></span> Recovery WBs</li>
+                                <li class="panel-item"><span class="panel-icon panel-pending"></span> Olig counts</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Sidebar -->
+        <div class="chat-sidebar" id="chatSidebar">
+            <div class="chat-header">
+                <h3>AI Assistant</h3>
+                <button class="chat-toggle" onclick="toggleChat()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M15 18l-6-6 6-6"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="chat-content" id="chatMessages">
+                <div class="chat-welcome">
+                    <h4>Research Assistant</h4>
+                    <p>Ask about experiments, results, or next steps.</p>
+                </div>
+            </div>
+            <div class="chat-input-container">
+                <div class="quick-prompts">
+                    <button class="quick-prompt" onclick="sendQuickPrompt('What should I do this week?')">This week?</button>
+                    <button class="quick-prompt" onclick="sendQuickPrompt('Interpret my results')">Results</button>
+                    <button class="quick-prompt" onclick="sendQuickPrompt('What will reviewers ask?')">Reviewers</button>
+                </div>
+                <div class="chat-input-row">
+                    <textarea class="chat-input" id="chatInput" placeholder="Ask anything..." rows="1" onkeydown="handleKeyDown(event)"></textarea>
+                    <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Task Modal -->
+    <div class="modal-overlay" id="taskModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modalTitle">Edit Task</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editTaskId">
+                <div class="form-group">
+                    <label>Task Name</label>
+                    <input type="text" id="editTaskTitle" placeholder="Enter task name...">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Week</label>
+                        <select id="editTaskWeek">
+                            <option value="1">Week 1</option>
+                            <option value="2">Week 2</option>
+                            <option value="3">Week 3</option>
+                            <option value="4">Week 4</option>
+                            <option value="5">Week 5</option>
+                            <option value="6">Week 6</option>
+                            <option value="7">Week 7</option>
+                            <option value="8">Week 8</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Priority</label>
+                        <select id="editTaskPriority">
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                            <option value="critical">Critical</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Figure</label>
+                    <select id="editTaskFigure">
+                        <option value="">None</option>
+                        <option value="1">Figure 1: EM Phenotype</option>
+                        <option value="2">Figure 2: Proteins + Lipids</option>
+                        <option value="3">Figure 3: Cellular Response</option>
+                        <option value="4">Figure 4: Recovery Failure</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Notes</label>
+                    <textarea id="editTaskNotes" placeholder="Add notes..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" onclick="deleteTask()" id="deleteTaskBtn">Delete</button>
+                <div>
+                    <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+                    <button class="btn btn-success" onclick="saveTask()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'myelin-paper-tracker';
+        let projectData = null;
+        let draggedTask = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadData();
+            updateUI();
+            autoResizeTextarea();
+        });
+
+        function loadData() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                projectData = JSON.parse(saved);
+            } else {
+                projectData = getDefaultData();
+                saveData();
+            }
+        }
+
+        function saveData() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(projectData));
+        }
+
+        function updateUI() {
+            updateStats();
+            renderWeeks();
+        }
+
+        function getWeekDates(weekNum) {
+            const start = new Date(projectData.project_start);
+            start.setDate(start.getDate() + (weekNum - 1) * 7);
+            const end = new Date(start);
+            end.setDate(end.getDate() + 6);
+
+            const formatDate = (d) => {
+                const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                return `${months[d.getMonth()]} ${d.getDate()}`;
+            };
+
+            return `${formatDate(start)} - ${formatDate(end)}`;
+        }
+
+        function updateStats() {
+            const deadline = new Date(projectData.deadline);
+            const today = new Date();
+            const daysLeft = Math.ceil((deadline - today) / (1000 * 60 * 60 * 24));
+            document.getElementById('daysLeft').textContent = daysLeft;
+
+            const projectStart = new Date(projectData.project_start);
+            const currentWeek = Math.min(Math.max(Math.floor((today - projectStart) / (1000 * 60 * 60 * 24 * 7)) + 1, 1), 8);
+            document.getElementById('currentWeek').textContent = currentWeek;
+            window.currentWeek = currentWeek;
+
+            const total = projectData.tasks.length;
+            const done = projectData.tasks.filter(t => t.completed).length;
+            const percent = Math.round((done / total) * 100);
+            document.getElementById('progressBar').style.width = `${percent}%`;
+            document.getElementById('progressPercent').textContent = percent;
+        }
+
+        function getTotalWeeks() {
+            // Get max week from tasks or default to 8
+            const maxTaskWeek = Math.max(...projectData.tasks.map(t => t.week), 8);
+            return Math.max(maxTaskWeek, projectData.totalWeeks || 8);
+        }
+
+        function renderWeeks() {
+            const grid = document.getElementById('weeksGrid');
+            grid.innerHTML = '';
+            const totalWeeks = getTotalWeeks();
+
+            for (let week = 1; week <= totalWeeks; week++) {
+                const tasks = projectData.tasks.filter(t => t.week === week);
+                const completed = tasks.filter(t => t.completed).length;
+                const isCurrent = week === window.currentWeek;
+                const weekDates = getWeekDates(week);
+
+                const card = document.createElement('div');
+                card.className = `week-card ${isCurrent ? 'current' : ''}`;
+                card.dataset.week = week;
+
+                // Drop zone events
+                card.addEventListener('dragover', handleDragOver);
+                card.addEventListener('dragleave', handleDragLeave);
+                card.addEventListener('drop', handleDrop);
+
+                card.innerHTML = `
+                    <div class="week-header">
+                        <div class="week-title-row">
+                            <span class="week-title">Week ${week}${isCurrent ? ' (Now)' : ''}</span>
+                            <span class="week-badge">${completed}/${tasks.length}</span>
+                        </div>
+                        <div class="week-dates">${weekDates}</div>
+                    </div>
+                    <div class="week-tasks" data-week="${week}">
+                        ${tasks.map(task => createTaskHTML(task)).join('')}
+                        ${tasks.length === 0 ? '<div style="padding: 1rem; text-align: center; color: var(--muted); font-size: 0.75rem;">Drop tasks here</div>' : ''}
+                    </div>
+                `;
+                grid.appendChild(card);
+            }
+
+            // Add drag events to all task items
+            document.querySelectorAll('.task-item').forEach(item => {
+                item.addEventListener('dragstart', handleDragStart);
+                item.addEventListener('dragend', handleDragEnd);
+            });
+        }
+
+        function createTaskHTML(task) {
+            return `
+                <div class="task-item ${task.completed ? 'completed' : ''}"
+                     draggable="true"
+                     data-task-id="${task.id}"
+                     onclick="openEditModal('${task.id}')">
+                    <input type="checkbox"
+                           ${task.completed ? 'checked' : ''}
+                           onclick="event.stopPropagation()"
+                           onchange="toggleTask('${task.id}', this.checked)">
+                    <div class="task-content">
+                        <div class="task-title">${task.title}</div>
+                        <div class="task-meta">
+                            ${task.priority === 'critical' ? '<span class="task-badge badge-critical">Critical</span>' : ''}
+                            ${task.priority === 'high' ? '<span class="task-badge badge-high">High</span>' : ''}
+                            ${task.figure ? `<span class="task-badge badge-fig">Fig ${task.figure}</span>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Drag and Drop
+        function handleDragStart(e) {
+            draggedTask = e.target.dataset.taskId;
+            e.target.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+        }
+
+        function handleDragEnd(e) {
+            e.target.classList.remove('dragging');
+            document.querySelectorAll('.week-card').forEach(card => {
+                card.classList.remove('drag-over');
+            });
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            const card = e.target.closest('.week-card');
+            if (card) card.classList.add('drag-over');
+        }
+
+        function handleDragLeave(e) {
+            const card = e.target.closest('.week-card');
+            if (card && !card.contains(e.relatedTarget)) {
+                card.classList.remove('drag-over');
+            }
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            const card = e.target.closest('.week-card');
+            if (card && draggedTask) {
+                const newWeek = parseInt(card.dataset.week);
+                const task = projectData.tasks.find(t => t.id === draggedTask);
+                if (task && task.week !== newWeek) {
+                    task.week = newWeek;
+                    saveData();
+                    renderWeeks();
+                }
+            }
+            document.querySelectorAll('.week-card').forEach(c => c.classList.remove('drag-over'));
+            draggedTask = null;
+        }
+
+        // Task Modal
+        function openEditModal(taskId) {
+            const task = projectData.tasks.find(t => t.id === taskId);
+            if (!task) return;
+
+            updateWeekSelector();
+            document.getElementById('editTaskId').value = taskId;
+            document.getElementById('editTaskTitle').value = task.title;
+            document.getElementById('editTaskWeek').value = task.week;
+            document.getElementById('editTaskPriority').value = task.priority || 'medium';
+            document.getElementById('editTaskFigure').value = task.figure || '';
+            document.getElementById('editTaskNotes').value = task.notes || '';
+            document.getElementById('modalTitle').textContent = 'Edit Task';
+            document.getElementById('deleteTaskBtn').style.display = 'block';
+
+            document.getElementById('taskModal').classList.add('active');
+        }
+
+        function addNewTask() {
+            updateWeekSelector();
+            document.getElementById('editTaskId').value = '';
+            document.getElementById('editTaskTitle').value = '';
+            document.getElementById('editTaskWeek').value = window.currentWeek || 1;
+            document.getElementById('editTaskPriority').value = 'medium';
+            document.getElementById('editTaskFigure').value = '';
+            document.getElementById('editTaskNotes').value = '';
+            document.getElementById('modalTitle').textContent = 'Add Task';
+            document.getElementById('deleteTaskBtn').style.display = 'none';
+
+            document.getElementById('taskModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('taskModal').classList.remove('active');
+        }
+
+        function saveTask() {
+            const taskId = document.getElementById('editTaskId').value;
+            const title = document.getElementById('editTaskTitle').value.trim();
+            const week = parseInt(document.getElementById('editTaskWeek').value);
+            const priority = document.getElementById('editTaskPriority').value;
+            const figure = document.getElementById('editTaskFigure').value;
+            const notes = document.getElementById('editTaskNotes').value;
+
+            if (!title) {
+                alert('Please enter a task name');
+                return;
+            }
+
+            if (taskId) {
+                // Edit existing
+                const task = projectData.tasks.find(t => t.id === taskId);
+                if (task) {
+                    task.title = title;
+                    task.week = week;
+                    task.priority = priority;
+                    task.figure = figure ? parseInt(figure) : null;
+                    task.notes = notes;
+                }
+            } else {
+                // Add new
+                const newId = 'task-' + Date.now();
+                projectData.tasks.push({
+                    id: newId,
+                    title: title,
+                    week: week,
+                    completed: false,
+                    priority: priority,
+                    figure: figure ? parseInt(figure) : null,
+                    notes: notes
+                });
+            }
+
+            saveData();
+            updateUI();
+            closeModal();
+        }
+
+        function deleteTask() {
+            const taskId = document.getElementById('editTaskId').value;
+            if (!taskId) return;
+
+            if (confirm('Delete this task?')) {
+                projectData.tasks = projectData.tasks.filter(t => t.id !== taskId);
+                saveData();
+                updateUI();
+                closeModal();
+            }
+        }
+
+        function toggleTask(taskId, completed) {
+            const task = projectData.tasks.find(t => t.id === taskId);
+            if (task) {
+                task.completed = completed;
+                saveData();
+                updateUI();
+            }
+        }
+
+        function autoAdjust() {
+            // Client-side auto-adjust based on current week
+            const today = new Date();
+            const projectStart = new Date(projectData.project_start);
+            const currentWeek = Math.min(Math.max(Math.floor((today - projectStart) / (1000 * 60 * 60 * 24 * 7)) + 1, 1), getTotalWeeks());
+
+            // Move incomplete past tasks to current week
+            let moved = 0;
+            projectData.tasks.forEach(task => {
+                if (!task.completed && task.week < currentWeek) {
+                    task.week = currentWeek;
+                    moved++;
+                }
+            });
+
+            saveData();
+            updateUI();
+            alert(`Schedule adjusted: ${moved} overdue task(s) moved to Week ${currentWeek}`);
+        }
+
+        function addWeek() {
+            const currentTotal = getTotalWeeks();
+            projectData.totalWeeks = currentTotal + 1;
+
+            // Extend deadline by 1 week
+            const deadline = new Date(projectData.deadline);
+            deadline.setDate(deadline.getDate() + 7);
+            projectData.deadline = deadline.toISOString().split('T')[0];
+
+            saveData();
+            updateUI();
+            updateWeekSelector();
+        }
+
+        function updateWeekSelector() {
+            const select = document.getElementById('editTaskWeek');
+            const currentValue = select.value;
+            const totalWeeks = getTotalWeeks();
+
+            select.innerHTML = '';
+            for (let i = 1; i <= totalWeeks; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = `Week ${i}`;
+                select.appendChild(option);
+            }
+            select.value = currentValue;
+        }
+
+        function switchView(view) {
+            document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector(`.view-btn[onclick="switchView('${view}')"]`).classList.add('active');
+            document.getElementById('tasksView').classList.toggle('hidden', view !== 'tasks');
+            document.getElementById('figuresView').classList.toggle('hidden', view !== 'figures');
+            document.getElementById('figuresView').classList.toggle('active', view === 'figures');
+        }
+
+        function toggleChat() {
+            document.getElementById('chatSidebar').classList.toggle('collapsed');
+        }
+
+        function autoResizeTextarea() {
+            const textarea = document.getElementById('chatInput');
+            textarea.addEventListener('input', () => {
+                textarea.style.height = 'auto';
+                textarea.style.height = Math.min(textarea.scrollHeight, 80) + 'px';
+            });
+        }
+
+        function handleKeyDown(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        }
+
+        function sendQuickPrompt(prompt) {
+            document.getElementById('chatInput').value = prompt;
+            sendMessage();
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            const sendBtn = document.getElementById('sendBtn');
+            sendBtn.disabled = true;
+            input.value = '';
+            input.style.height = 'auto';
+
+            addChatMessage('user', message);
+
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'chat-message assistant';
+            typingDiv.id = 'typing';
+            typingDiv.innerHTML = `<div class="message-bubble"><div class="typing-indicator"><span></span><span></span><span></span></div></div>`;
+            document.getElementById('chatMessages').appendChild(typingDiv);
+            scrollChat();
+
+            try {
+                const res = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        message,
+                        tasks: projectData.tasks
+                    })
+                });
+                const data = await res.json();
+                document.getElementById('typing')?.remove();
+                addChatMessage('assistant', data.message || data.response);
+
+                // Apply task updates locally
+                if (data.task_updates?.length > 0) {
+                    data.task_updates.forEach(update => {
+                        if (update.action === 'move') {
+                            const task = projectData.tasks.find(t => t.id === update.task_id);
+                            if (task) task.week = update.new_week;
+                        } else if (update.action === 'complete') {
+                            const task = projectData.tasks.find(t => t.id === update.task_id);
+                            if (task) task.completed = true;
+                        } else if (update.action === 'add') {
+                            projectData.tasks.push({
+                                id: 'task-' + Date.now(),
+                                title: update.title,
+                                week: update.week,
+                                completed: false,
+                                priority: update.priority || 'medium',
+                                figure: update.figure || null
+                            });
+                        } else if (update.action === 'delete') {
+                            projectData.tasks = projectData.tasks.filter(t => t.id !== update.task_id);
+                        }
+                    });
+                    saveData();
+                    updateUI();
+                }
+            } catch (e) {
+                document.getElementById('typing')?.remove();
+                addChatMessage('assistant', 'Error connecting to AI. Please check your setup.');
+            }
+
+            sendBtn.disabled = false;
+        }
+
+        function addChatMessage(role, content) {
+            const container = document.getElementById('chatMessages');
+            const div = document.createElement('div');
+            div.className = `chat-message ${role}`;
+
+            let formatted = content
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\n\n/g, '</p><p>')
+                .replace(/```json:task_update[\s\S]*?```/g, '');
+
+            div.innerHTML = `<div class="message-bubble"><p>${formatted}</p></div>`;
+            container.appendChild(div);
+            scrollChat();
+        }
+
+        function scrollChat() {
+            const container = document.getElementById('chatMessages');
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // Close modal on outside click
+        document.getElementById('taskModal').addEventListener('click', (e) => {
+            if (e.target.id === 'taskModal') closeModal();
+        });
+
+        // Close modal on Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        function getDefaultData() {
+            return {
+                project_start: "2026-01-17",
+                deadline: "2026-03-17",
+                tasks: [
+                    {id: "mag-quant", title: "Quantify MAG Western blot", week: 1, completed: false, priority: "high", figure: 2, notes: ""},
+                    {id: "cut-sections", title: "Cut IHC sections", week: 1, completed: false, priority: "medium", figure: 3, notes: ""},
+                    {id: "prep-massspec", title: "Prepare mass spec samples", week: 1, completed: false, priority: "critical", figure: 2, notes: ""},
+                    {id: "send-massspec", title: "Send to mass spec core", week: 1, completed: false, priority: "critical", figure: 2, notes: "BOTTLENECK"},
+                    {id: "olig2-stain", title: "Olig2/CC1 IHC staining", week: 2, completed: false, priority: "high", figure: 3, notes: ""},
+                    {id: "degenerotag", title: "DegeneroTag staining", week: 2, completed: false, priority: "high", figure: 3, notes: ""},
+                    {id: "ihc-imaging", title: "Image IHC sections", week: 3, completed: false, priority: "medium", figure: 3, notes: ""},
+                    {id: "ihc-quant-start", title: "Begin IHC quantification", week: 3, completed: false, priority: "medium", figure: 3, notes: ""},
+                    {id: "recovery-plp", title: "Recovery WB: PLP", week: 4, completed: false, priority: "high", figure: 4, notes: ""},
+                    {id: "recovery-mag", title: "Recovery WB: MAG", week: 4, completed: false, priority: "high", figure: 4, notes: ""},
+                    {id: "recovery-quant", title: "Quantify recovery WBs", week: 4, completed: false, priority: "medium", figure: 4, notes: ""},
+                    {id: "recovery-stats", title: "Recovery statistics", week: 4, completed: false, priority: "medium", figure: 4, notes: ""},
+                    {id: "ihc-quant-complete", title: "Complete IHC quantification", week: 5, completed: false, priority: "high", figure: 3, notes: ""},
+                    {id: "massspec-analyze", title: "Analyze mass spec results", week: 5, completed: false, priority: "high", figure: 2, notes: ""},
+                    {id: "all-stats", title: "All statistical analyses", week: 5, completed: false, priority: "high", figure: null, notes: ""},
+                    {id: "fig1-final", title: "Finalize Figure 1", week: 6, completed: false, priority: "high", figure: 1, notes: ""},
+                    {id: "fig2-final", title: "Finalize Figure 2", week: 6, completed: false, priority: "high", figure: 2, notes: ""},
+                    {id: "fig3-final", title: "Finalize Figure 3", week: 7, completed: false, priority: "high", figure: 3, notes: ""},
+                    {id: "fig4-final", title: "Finalize Figure 4", week: 7, completed: false, priority: "high", figure: 4, notes: ""},
+                    {id: "write-legends", title: "Write figure legends", week: 7, completed: false, priority: "medium", figure: null, notes: ""},
+                    {id: "write-manuscript", title: "Complete manuscript", week: 8, completed: false, priority: "critical", figure: null, notes: ""},
+                    {id: "coauthor-review", title: "Co-author review", week: 8, completed: false, priority: "high", figure: null, notes: ""},
+                    {id: "submit", title: "SUBMIT PAPER", week: 8, completed: false, priority: "critical", figure: null, notes: ""}
+                ],
+                figures: [
+                    {id: 1, title: "EM Phenotype", status: "complete"},
+                    {id: 2, title: "Proteins + Lipids", status: "in_progress"},
+                    {id: 3, title: "Cellular Response", status: "not_started"},
+                    {id: 4, title: "Recovery Failure", status: "partial"}
+                ],
+                results: [],
+                chat_history: []
+            };
+        }
+    </script>
+</body>
+</html>
