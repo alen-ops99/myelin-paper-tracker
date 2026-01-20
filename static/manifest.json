@@ -1,0 +1,17 @@
+{
+  "name": "Myelin Paper Tracker",
+  "short_name": "Myelin",
+  "description": "Track your Myelin & Sleep Loss research paper progress",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f1c2e",
+  "theme_color": "#0f1c2e",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
