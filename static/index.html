@@ -724,7 +724,7 @@
                     <select id="editTaskFigure">
                         <option value="">None</option>
                         <option value="1">Figure 1: EM Phenotype</option>
-                        <option value="2">Figure 2: Myelin Proteins</option>
+                        <option value="2">Figure 2: Myelin Biochemistry</option>
                         <option value="3">Figure 3: Lipofuscin</option>
                         <option value="4">Figure 4: Recovery (10d)</option>
                         <option value="5">Figure 5: Remyelination (20d)</option>
@@ -750,11 +750,11 @@
     <script>
     // ==================== CONSTANTS ====================
     const STORAGE_KEY = 'myelin-paper-tracker';
-    const DATA_VERSION = 3;
+    const DATA_VERSION = 4;
 
     const FIGURE_DEFS = {
         '1': { title: 'Figure 1: EM Phenotype (SD vs Control)', short: 'Fig 1' },
-        '2': { title: 'Figure 2: Myelin Protein Changes', short: 'Fig 2' },
+        '2': { title: 'Figure 2: Myelin Biochemistry (Proteins + Lipids)', short: 'Fig 2' },
         '3': { title: 'Figure 3: Lipofuscin', short: 'Fig 3' },
         '4': { title: 'Figure 4: Recovery Phase (10-day)', short: 'Fig 4' },
         '5': { title: 'Figure 5: Remyelination (20-day)', short: 'Fig 5' },
@@ -1467,6 +1467,8 @@
                  notes: "Stain: Control, SD, 10d rec, 20d rec. Key question: do oligodendrocytes survive SD? Start sectioning + staining Day 1. ~2 weeks for full protocol.", blockedBy: []},
                 {id: "iba1-ihc", title: "Iba1 IHC staining (all 4 timepoints)", week: 1, completed: false, priority: "high", figure: "4",
                  notes: "Stain: Control, SD, 10d rec, 20d rec. Confirms dark microglia EM finding with standard marker. Run in parallel with Olig2/CC1 — same tissue blocks, different sections.", blockedBy: []},
+                {id: "lipid-extraction", title: "Lipid extraction from frozen brain (all 4 timepoints)", week: 1, completed: false, priority: "high", figure: "2",
+                 notes: "Folch or Bligh-Dyer extraction from frozen tissue: Control, SD, 10d rec, 20d rec. 1-2 days bench work. Run parallel with IHC sectioning.", blockedBy: []},
 
                 // ===== WEEK 2 (Feb 24 - Mar 2): Recovery WBs + EM survey + continue IHC =====
                 {id: "recovery-wb-10d", title: "Recovery Western blots (PLP/MBP/MAG at 10d)", week: 2, completed: false, priority: "critical", figure: "4",
@@ -1475,6 +1477,8 @@
                  notes: "Systematic EM survey of 20d recovery tissue. Are dark microglia resolved? Glycogen still present? Lipofuscin status?", blockedBy: []},
                 {id: "cd68-staining", title: "CD68 phagocytosis marker (10d recovery)", week: 2, completed: false, priority: "medium", figure: "4",
                  notes: "Confirms microglia actively phagocytosing myelin (not just morphologically dark). Co-stain with MBP if possible. Strongly recommended for Nature.", blockedBy: []},
+                {id: "mass-spec-submit", title: "Submit lipid samples to mass spec core", week: 2, completed: false, priority: "high", figure: "2",
+                 notes: "Transport extracted lipids to core facility. Expect 2-3 week turnaround. Request: galactocerebroside, sulfatide, sphingomyelin, cholesterol panel.", blockedBy: ["lipid-extraction"]},
 
                 // ===== WEEK 3 (Mar 3-9): IHC imaging + WB analysis =====
                 {id: "olig-imaging-counts", title: "Image + count Olig2/CC1 sections (all timepoints)", week: 3, completed: false, priority: "critical", figure: "4",
@@ -1491,6 +1495,8 @@
                 // ===== WEEK 4 (Mar 10-16): Finalize all experimental data =====
                 {id: "recovery-wb-20d-analysis", title: "Complete 20d recovery WB analysis", week: 4, completed: false, priority: "high", figure: "5",
                  notes: "Densitometry + stats for 20d recovery Western blots.", blockedBy: ["recovery-wb-20d"]},
+                {id: "mass-spec-analysis", title: "Analyze mass spec lipidomics results", week: 4, completed: false, priority: "high", figure: "2",
+                 notes: "Analyze lipid profiles across all 4 conditions. Key lipids: galactocerebroside, sulfatide, sphingomyelin, cholesterol. Should show myelin lipid depletion during SD and recovery trajectory.", blockedBy: ["mass-spec-submit"]},
                 {id: "finalize-all-stats", title: "Finalize all quantifications and statistics", week: 4, completed: false, priority: "high", figure: null,
                  notes: "Final pass on ALL data. Ensure N's adequate for Nature. Effect sizes, P-values for every comparison.", blockedBy: []},
                 {id: "begin-figure-assembly", title: "Begin figure assembly in Illustrator/Prism", week: 4, completed: false, priority: "medium", figure: null,
@@ -1499,8 +1505,8 @@
                 // ===== WEEK 5 (Mar 17-23): Figure Assembly =====
                 {id: "assemble-fig1", title: "Assemble Figure 1 (EM Phenotype)", week: 5, completed: false, priority: "high", figure: "1",
                  notes: "Figure 1 data is complete. Final Illustrator layout + panel labels.", blockedBy: []},
-                {id: "assemble-fig2", title: "Assemble Figure 2 (Myelin Proteins)", week: 5, completed: false, priority: "high", figure: "2",
-                 notes: "PLP WB + ELISA, MAG WB, MBP WB, protein schematic.", blockedBy: ["mag-densitometry"]},
+                {id: "assemble-fig2", title: "Assemble Figure 2 (Myelin Biochemistry)", week: 5, completed: false, priority: "high", figure: "2",
+                 notes: "Protein panels: PLP WB + ELISA, MAG WB, MBP WB, schematic. Lipid panels: mass spec lipidomics across all 4 conditions.", blockedBy: ["mag-densitometry", "mass-spec-analysis"]},
                 {id: "assemble-fig3", title: "Assemble Figure 3 (Lipofuscin)", week: 5, completed: false, priority: "high", figure: "3",
                  notes: "EM panels + quantification graph.", blockedBy: ["lipofuscin-finalize"]},
                 {id: "assemble-fig4", title: "Assemble Figure 4 (Recovery & Cellular Response)", week: 5, completed: false, priority: "high", figure: "4",
@@ -1541,8 +1547,6 @@
                  blockedBy: ["address-comments", "cover-letter", "format-submission", "data-deposition"]},
 
                 // ===== NICE-TO-HAVE (Extended Data) =====
-                {id: "mass-spec", title: "Mass spectrometry (lipid profiling)", week: 4, completed: false, priority: "medium", figure: "extended",
-                 notes: "3-4 weeks total. Send to core facility. Nice-to-have for extended data.", blockedBy: []},
                 {id: "female-replication", title: "Female mice replication cohort", week: 5, completed: false, priority: "medium", figure: "extended",
                  notes: "Dragana suggested. 6-8 weeks. Better for revision rather than initial submission.", blockedBy: []},
                 {id: "degenerotag", title: "DegeneroTag neurodegeneration assessment", week: 5, completed: false, priority: "low", figure: "extended",
