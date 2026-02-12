@@ -26,13 +26,12 @@
             --muted: #6b7280;
             --chat-user: #dbeafe;
             --chat-ai: #f3f4f6;
+            --purple: #8b5cf6;
+            --cyan: #06b6d4;
+            --indigo: #6366f1;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -42,10 +41,7 @@
             min-height: 100vh;
         }
 
-        .app-container {
-            display: flex;
-            height: 100vh;
-        }
+        .app-container { display: flex; height: 100vh; }
 
         /* Main Content */
         .main-content {
@@ -67,58 +63,18 @@
             gap: 1rem;
         }
 
-        .main-header h1 {
-            font-size: 1.25rem;
-            font-weight: 600;
-        }
+        .main-header h1 { font-size: 1.25rem; font-weight: 600; }
 
-        .header-stats {
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-        }
+        .header-stats { display: flex; gap: 1.5rem; align-items: center; }
 
-        .stat-item {
-            text-align: center;
-        }
+        .stat-item { text-align: center; }
+        .stat-item .number { font-size: 1.5rem; font-weight: 700; color: var(--gold); }
+        .stat-item .label { font-size: 0.625rem; text-transform: uppercase; opacity: 0.7; }
 
-        .stat-item .number {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--gold);
-        }
-
-        .stat-item .label {
-            font-size: 0.625rem;
-            text-transform: uppercase;
-            opacity: 0.7;
-        }
-
-        .progress-mini {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .progress-mini .bar {
-            width: 100px;
-            height: 6px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 3px;
-            overflow: hidden;
-        }
-
-        .progress-mini .fill {
-            height: 100%;
-            background: var(--gold);
-            transition: width 0.3s;
-        }
-
-        .progress-mini .text {
-            font-size: 0.75rem;
-            color: var(--gold);
-            font-weight: 600;
-        }
+        .progress-mini { display: flex; align-items: center; gap: 0.75rem; }
+        .progress-mini .bar { width: 100px; height: 6px; background: rgba(255,255,255,0.2); border-radius: 3px; overflow: hidden; }
+        .progress-mini .fill { height: 100%; background: var(--gold); transition: width 0.3s; }
+        .progress-mini .text { font-size: 0.75rem; color: var(--gold); font-weight: 600; }
 
         .action-bar {
             background: white;
@@ -127,6 +83,7 @@
             display: flex;
             gap: 0.5rem;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .btn {
@@ -139,27 +96,19 @@
             transition: all 0.2s;
         }
 
-        .btn-primary {
-            background: var(--navy);
-            color: white;
-        }
+        .btn-primary { background: var(--navy); color: white; }
+        .btn-primary:hover { background: var(--navy-light); }
+        .btn-outline { background: transparent; border: 1px solid #d1d5db; color: var(--navy); }
+        .btn-outline:hover { background: #f3f4f6; }
+        .btn-danger { background: var(--danger); color: white; }
+        .btn-danger:hover { background: #dc2626; }
+        .btn-success { background: var(--success); color: white; }
+        .btn-success:hover { background: #16a34a; }
+        .btn-sm { padding: 0.375rem 0.625rem; font-size: 0.75rem; }
 
-        .btn-primary:hover {
-            background: var(--navy-light);
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 1px solid #d1d5db;
-            color: var(--navy);
-        }
-
-        .btn-outline:hover {
-            background: #f3f4f6;
-        }
+        .action-right { margin-left: auto; display: flex; gap: 0.5rem; align-items: center; }
 
         .view-toggle {
-            margin-left: auto;
             display: flex;
             gap: 0.25rem;
             background: #f3f4f6;
@@ -168,13 +117,14 @@
         }
 
         .view-btn {
-            padding: 0.375rem 0.75rem;
+            padding: 0.375rem 0.625rem;
             border: none;
             background: none;
-            font-size: 0.75rem;
+            font-size: 0.6875rem;
             cursor: pointer;
             border-radius: 4px;
             color: var(--muted);
+            white-space: nowrap;
         }
 
         .view-btn.active {
@@ -184,11 +134,7 @@
         }
 
         /* Task Grid */
-        .tasks-container {
-            flex: 1;
-            overflow-y: auto;
-            padding: 1.5rem;
-        }
+        .tasks-container { flex: 1; overflow-y: auto; padding: 1.5rem; }
 
         .weeks-grid {
             display: grid;
@@ -204,58 +150,19 @@
             transition: box-shadow 0.2s;
         }
 
-        .week-card.current {
-            box-shadow: 0 0 0 2px var(--gold), 0 4px 12px rgba(0,0,0,0.1);
-        }
+        .week-card.current { box-shadow: 0 0 0 2px var(--gold), 0 4px 12px rgba(0,0,0,0.1); }
+        .week-card.drag-over { box-shadow: 0 0 0 2px var(--success), 0 4px 12px rgba(0,0,0,0.15); background: #f0fdf4; }
 
-        .week-card.drag-over {
-            box-shadow: 0 0 0 2px var(--success), 0 4px 12px rgba(0,0,0,0.15);
-            background: #f0fdf4;
-        }
+        .week-header { background: var(--navy); color: white; padding: 0.75rem 1rem; }
+        .week-card.current .week-header { background: linear-gradient(135deg, var(--navy), var(--navy-light)); }
 
-        .week-header {
-            background: var(--navy);
-            color: white;
-            padding: 0.75rem 1rem;
-        }
+        .week-title-row { display: flex; justify-content: space-between; align-items: center; }
+        .week-title { font-weight: 600; font-size: 0.9375rem; }
+        .week-badge { background: rgba(255,255,255,0.2); padding: 0.125rem 0.5rem; border-radius: 10px; font-size: 0.6875rem; }
+        .week-card.current .week-badge { background: var(--gold); color: var(--navy); }
+        .week-dates { font-size: 0.6875rem; opacity: 0.7; margin-top: 0.25rem; }
 
-        .week-card.current .week-header {
-            background: linear-gradient(135deg, var(--navy), var(--navy-light));
-        }
-
-        .week-title-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .week-title {
-            font-weight: 600;
-            font-size: 0.9375rem;
-        }
-
-        .week-badge {
-            background: rgba(255,255,255,0.2);
-            padding: 0.125rem 0.5rem;
-            border-radius: 10px;
-            font-size: 0.6875rem;
-        }
-
-        .week-card.current .week-badge {
-            background: var(--gold);
-            color: var(--navy);
-        }
-
-        .week-dates {
-            font-size: 0.6875rem;
-            opacity: 0.7;
-            margin-top: 0.25rem;
-        }
-
-        .week-tasks {
-            padding: 0.5rem;
-            min-height: 80px;
-        }
+        .week-tasks { padding: 0.5rem; min-height: 80px; }
 
         .task-item {
             display: flex;
@@ -268,18 +175,13 @@
             border: 1px solid transparent;
         }
 
-        .task-item:hover {
-            background: #f9fafb;
-            border-color: #e5e7eb;
-        }
+        .task-item:hover { background: #f9fafb; border-color: #e5e7eb; }
+        .task-item.completed { opacity: 0.5; }
+        .task-item.dragging { opacity: 0.5; cursor: grabbing; }
 
-        .task-item.completed {
-            opacity: 0.5;
-        }
-
-        .task-item.dragging {
-            opacity: 0.5;
-            cursor: grabbing;
+        .task-item.blocked {
+            border-left: 3px solid var(--danger);
+            background: #fef2f2;
         }
 
         .task-item input[type="checkbox"] {
@@ -291,29 +193,11 @@
             flex-shrink: 0;
         }
 
-        .task-content {
-            flex: 1;
-            min-width: 0;
-        }
+        .task-content { flex: 1; min-width: 0; }
+        .task-title { font-size: 0.8125rem; font-weight: 500; line-height: 1.4; }
+        .task-item.completed .task-title { text-decoration: line-through; color: var(--muted); }
 
-        .task-title {
-            font-size: 0.8125rem;
-            font-weight: 500;
-            line-height: 1.4;
-        }
-
-        .task-item.completed .task-title {
-            text-decoration: line-through;
-            color: var(--muted);
-        }
-
-        .task-meta {
-            display: flex;
-            gap: 0.375rem;
-            margin-top: 0.25rem;
-            flex-wrap: wrap;
-            align-items: center;
-        }
+        .task-meta { display: flex; gap: 0.375rem; margin-top: 0.25rem; flex-wrap: wrap; align-items: center; }
 
         .task-badge {
             font-size: 0.5625rem;
@@ -326,7 +210,12 @@
 
         .badge-critical { background: var(--danger); }
         .badge-high { background: var(--warning); }
+        .badge-medium { background: var(--indigo); }
+        .badge-low { background: #9ca3af; }
         .badge-fig { background: var(--navy-light); }
+        .badge-manuscript { background: var(--purple); }
+        .badge-extended { background: var(--cyan); }
+        .badge-blocked { background: #fecaca; color: #991b1b; font-size: 0.5rem; }
 
         .task-edit-btn {
             background: none;
@@ -338,35 +227,20 @@
             transition: opacity 0.2s;
         }
 
-        .task-item:hover .task-edit-btn {
-            opacity: 1;
-        }
-
-        .task-edit-btn:hover {
-            color: var(--navy);
-        }
+        .task-item:hover .task-edit-btn { opacity: 1; }
+        .task-edit-btn:hover { color: var(--navy); }
 
         /* Edit Modal */
         .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0,0,0,0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
+            opacity: 0; visibility: hidden;
             transition: all 0.2s;
         }
 
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
 
         .modal {
             background: white;
@@ -379,9 +253,7 @@
             transition: transform 0.2s;
         }
 
-        .modal-overlay.active .modal {
-            transform: translateY(0);
-        }
+        .modal-overlay.active .modal { transform: translateY(0); }
 
         .modal-header {
             padding: 1.25rem;
@@ -391,69 +263,34 @@
             align-items: center;
         }
 
-        .modal-header h3 {
-            font-size: 1.125rem;
-            font-weight: 600;
-        }
+        .modal-header h3 { font-size: 1.125rem; font-weight: 600; }
 
         .modal-close {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--muted);
-            line-height: 1;
+            background: none; border: none; font-size: 1.5rem;
+            cursor: pointer; color: var(--muted); line-height: 1;
         }
+        .modal-close:hover { color: var(--navy); }
 
-        .modal-close:hover {
-            color: var(--navy);
-        }
+        .modal-body { padding: 1.25rem; }
 
-        .modal-body {
-            padding: 1.25rem;
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
+        .form-group { margin-bottom: 1rem; }
         .form-group label {
-            display: block;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            color: var(--muted);
-            margin-bottom: 0.375rem;
+            display: block; font-size: 0.75rem; font-weight: 600;
+            text-transform: uppercase; color: var(--muted); margin-bottom: 0.375rem;
         }
 
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 0.625rem 0.875rem;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            font-size: 0.9375rem;
-            font-family: inherit;
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; padding: 0.625rem 0.875rem;
+            border: 1px solid #d1d5db; border-radius: 6px;
+            font-size: 0.9375rem; font-family: inherit;
         }
 
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--gold);
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none; border-color: var(--gold);
         }
 
-        .form-group textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
+        .form-group textarea { resize: vertical; min-height: 80px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 
         .modal-footer {
             padding: 1rem 1.25rem;
@@ -463,226 +300,102 @@
             gap: 0.75rem;
         }
 
-        .btn-danger {
-            background: var(--danger);
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background: #dc2626;
-        }
-
-        .btn-success {
-            background: var(--success);
-            color: white;
-        }
-
-        .btn-success:hover {
-            background: #16a34a;
-        }
-
         /* Chat Sidebar */
         .chat-sidebar {
-            width: 320px;
-            background: white;
+            width: 320px; background: white;
             border-left: 1px solid #e5e7eb;
-            display: flex;
-            flex-direction: column;
-            flex-shrink: 0;
+            display: flex; flex-direction: column; flex-shrink: 0;
         }
 
-        .chat-sidebar.collapsed {
-            width: 48px;
-        }
+        .chat-sidebar.collapsed { width: 48px; }
 
         .chat-header {
             padding: 0.75rem 1rem;
             border-bottom: 1px solid #e5e7eb;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--navy);
-            color: white;
+            display: flex; justify-content: space-between; align-items: center;
+            background: var(--navy); color: white;
         }
 
-        .chat-header h3 {
-            font-size: 0.875rem;
-            font-weight: 600;
-        }
+        .chat-header h3 { font-size: 0.875rem; font-weight: 600; }
 
         .chat-toggle {
-            background: none;
-            border: none;
-            color: white;
-            cursor: pointer;
-            padding: 0.25rem;
-            opacity: 0.7;
+            background: none; border: none; color: white;
+            cursor: pointer; padding: 0.25rem; opacity: 0.7;
         }
-
-        .chat-toggle:hover {
-            opacity: 1;
-        }
+        .chat-toggle:hover { opacity: 1; }
 
         .chat-sidebar.collapsed .chat-header {
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-            padding: 1rem 0.75rem;
+            writing-mode: vertical-rl; text-orientation: mixed; padding: 1rem 0.75rem;
         }
-
-        .chat-sidebar.collapsed .chat-header h3 {
-            transform: rotate(180deg);
-        }
-
+        .chat-sidebar.collapsed .chat-header h3 { transform: rotate(180deg); }
         .chat-sidebar.collapsed .chat-content,
-        .chat-sidebar.collapsed .chat-input-container {
-            display: none;
-        }
+        .chat-sidebar.collapsed .chat-input-container { display: none; }
 
-        .chat-content {
-            flex: 1;
-            overflow-y: auto;
-            padding: 0.75rem;
-        }
+        .chat-content { flex: 1; overflow-y: auto; padding: 0.75rem; }
 
         .chat-welcome {
             background: linear-gradient(135deg, var(--navy), var(--navy-light));
-            color: white;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 0.75rem;
-            font-size: 0.8125rem;
+            color: white; padding: 1rem; border-radius: 8px;
+            margin-bottom: 0.75rem; font-size: 0.8125rem;
         }
+        .chat-welcome h4 { color: var(--gold); margin-bottom: 0.25rem; font-size: 0.875rem; }
 
-        .chat-welcome h4 {
-            color: var(--gold);
-            margin-bottom: 0.25rem;
-            font-size: 0.875rem;
-        }
-
-        .chat-message {
-            margin-bottom: 0.75rem;
-        }
-
-        .chat-message.user {
-            text-align: right;
-        }
+        .chat-message { margin-bottom: 0.75rem; }
+        .chat-message.user { text-align: right; }
 
         .message-bubble {
-            display: inline-block;
-            max-width: 90%;
-            padding: 0.625rem 0.875rem;
-            border-radius: 12px;
-            font-size: 0.8125rem;
-            line-height: 1.5;
-            text-align: left;
+            display: inline-block; max-width: 90%;
+            padding: 0.625rem 0.875rem; border-radius: 12px;
+            font-size: 0.8125rem; line-height: 1.5; text-align: left;
         }
 
-        .chat-message.user .message-bubble {
-            background: var(--chat-user);
-            border-bottom-right-radius: 4px;
-        }
-
-        .chat-message.assistant .message-bubble {
-            background: var(--chat-ai);
-            border-bottom-left-radius: 4px;
-        }
+        .chat-message.user .message-bubble { background: var(--chat-user); border-bottom-right-radius: 4px; }
+        .chat-message.assistant .message-bubble { background: var(--chat-ai); border-bottom-left-radius: 4px; }
 
         .message-bubble p { margin-bottom: 0.5rem; }
         .message-bubble p:last-child { margin-bottom: 0; }
         .message-bubble strong { color: var(--navy); }
 
-        .chat-input-container {
-            padding: 0.75rem;
-            border-top: 1px solid #e5e7eb;
-        }
+        .chat-input-container { padding: 0.75rem; border-top: 1px solid #e5e7eb; }
 
-        .quick-prompts {
-            display: flex;
-            gap: 0.375rem;
-            margin-bottom: 0.5rem;
-            flex-wrap: wrap;
-        }
+        .quick-prompts { display: flex; gap: 0.375rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
 
         .quick-prompt {
-            padding: 0.25rem 0.5rem;
-            background: #f3f4f6;
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            font-size: 0.625rem;
-            cursor: pointer;
-            transition: all 0.2s;
+            padding: 0.25rem 0.5rem; background: #f3f4f6;
+            border: 1px solid #e5e7eb; border-radius: 12px;
+            font-size: 0.625rem; cursor: pointer; transition: all 0.2s;
         }
+        .quick-prompt:hover { background: var(--navy); color: white; border-color: var(--navy); }
 
-        .quick-prompt:hover {
-            background: var(--navy);
-            color: white;
-            border-color: var(--navy);
-        }
-
-        .chat-input-row {
-            display: flex;
-            gap: 0.5rem;
-        }
+        .chat-input-row { display: flex; gap: 0.5rem; }
 
         .chat-input {
-            flex: 1;
-            padding: 0.5rem 0.75rem;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-size: 0.8125rem;
-            resize: none;
-            min-height: 36px;
-            max-height: 80px;
-            font-family: inherit;
+            flex: 1; padding: 0.5rem 0.75rem; border: 1px solid #d1d5db;
+            border-radius: 8px; font-size: 0.8125rem; resize: none;
+            min-height: 36px; max-height: 80px; font-family: inherit;
         }
-
-        .chat-input:focus {
-            outline: none;
-            border-color: var(--gold);
-        }
+        .chat-input:focus { outline: none; border-color: var(--gold); }
 
         .send-btn {
-            width: 36px;
-            height: 36px;
-            border: none;
-            background: var(--navy);
-            color: white;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
+            width: 36px; height: 36px; border: none; background: var(--navy);
+            color: white; border-radius: 8px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
         }
-
         .send-btn:hover { background: var(--navy-light); }
         .send-btn:disabled { background: #d1d5db; }
 
-        .typing-indicator {
-            display: flex;
-            gap: 3px;
-            padding: 0.5rem;
-        }
-
+        .typing-indicator { display: flex; gap: 3px; padding: 0.5rem; }
         .typing-indicator span {
-            width: 6px;
-            height: 6px;
-            background: var(--muted);
-            border-radius: 50%;
-            animation: typing 1.4s infinite;
+            width: 6px; height: 6px; background: var(--muted);
+            border-radius: 50%; animation: typing 1.4s infinite;
         }
-
         .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
         .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
-
-        @keyframes typing {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
-        }
+        @keyframes typing { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
 
         /* Figures View */
-        .figures-view { display: none; }
-        .figures-view.active { display: block; }
+        .figures-view, .thisweek-view, .critical-view { display: none; }
+        .figures-view.active, .thisweek-view.active, .critical-view.active { display: block; }
 
         .figures-grid {
             display: grid;
@@ -697,81 +410,205 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
-        .figure-card h3 {
-            font-size: 1rem;
-            margin-bottom: 0.75rem;
+        .figure-card-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
         }
+
+        .figure-card-header h3 { font-size: 0.9375rem; font-weight: 600; flex: 1; }
 
         .figure-status {
             font-size: 0.6875rem;
             padding: 0.25rem 0.625rem;
             border-radius: 12px;
             font-weight: 600;
+            white-space: nowrap;
+            margin-left: 0.5rem;
         }
 
         .status-complete { background: #dcfce7; color: #166534; }
-        .status-in_progress { background: #fef3c7; color: #92400e; }
-        .status-partial { background: #dbeafe; color: #1e40af; }
-        .status-not_started { background: #f3f4f6; color: #6b7280; }
+        .status-in-progress { background: #fef3c7; color: #92400e; }
+        .status-not-started { background: #f3f4f6; color: #6b7280; }
 
-        .panel-list { list-style: none; }
+        .figure-progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #e5e7eb;
+            border-radius: 2px;
+            margin-bottom: 0.75rem;
+            overflow: hidden;
+        }
 
-        .panel-item {
+        .figure-progress-fill {
+            height: 100%;
+            background: var(--success);
+            border-radius: 2px;
+            transition: width 0.3s;
+        }
+
+        .figure-task-list { list-style: none; }
+
+        .figure-task-item {
             display: flex;
             align-items: center;
             padding: 0.375rem 0;
             font-size: 0.8125rem;
             border-bottom: 1px solid #f3f4f6;
         }
+        .figure-task-item:last-child { border-bottom: none; }
 
-        .panel-item:last-child { border-bottom: none; }
-
-        .panel-icon {
-            width: 18px;
-            height: 18px;
+        .figure-task-icon {
+            width: 18px; height: 18px;
             border-radius: 50%;
             margin-right: 0.625rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.625rem;
-            flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.625rem; flex-shrink: 0;
         }
 
-        .panel-done { background: var(--success); color: white; }
-        .panel-pending { background: #e5e7eb; }
+        .icon-done { background: var(--success); color: white; }
+        .icon-pending { background: #e5e7eb; }
+        .icon-blocked { background: #fecaca; color: #991b1b; font-size: 0.5rem; }
+
+        .figure-task-text { flex: 1; }
+        .figure-task-text.done { text-decoration: line-through; color: var(--muted); }
+
+        /* This Week View */
+        .thisweek-header {
+            background: linear-gradient(135deg, var(--navy), var(--navy-light));
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+        .thisweek-header h2 { font-size: 1.25rem; color: var(--gold); margin-bottom: 0.25rem; }
+        .thisweek-header p { font-size: 0.875rem; opacity: 0.8; }
+
+        .thisweek-tasks {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .thisweek-task {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid #f3f4f6;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .thisweek-task:last-child { border-bottom: none; }
+        .thisweek-task:hover { background: #f9fafb; }
+        .thisweek-task.completed { opacity: 0.5; }
+        .thisweek-task.blocked { border-left: 3px solid var(--danger); background: #fef2f2; }
+
+        .thisweek-task input[type="checkbox"] {
+            width: 20px; height: 20px; margin-top: 2px;
+            cursor: pointer; accent-color: var(--success); flex-shrink: 0;
+        }
+
+        .thisweek-task-content { flex: 1; }
+        .thisweek-task-title { font-size: 0.9375rem; font-weight: 500; }
+        .thisweek-task.completed .thisweek-task-title { text-decoration: line-through; color: var(--muted); }
+        .thisweek-task-meta { display: flex; gap: 0.375rem; margin-top: 0.375rem; flex-wrap: wrap; }
+        .thisweek-task-notes { font-size: 0.75rem; color: var(--muted); margin-top: 0.25rem; }
+
+        /* Critical Path View */
+        .critical-header {
+            background: linear-gradient(135deg, #7f1d1d, #991b1b);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+        .critical-header h2 { font-size: 1.25rem; margin-bottom: 0.25rem; }
+        .critical-header p { font-size: 0.875rem; opacity: 0.8; }
+
+        .critical-group {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .critical-group-header {
+            background: var(--navy);
+            color: white;
+            padding: 0.75rem 1.25rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .critical-task {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.875rem 1.25rem;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        .critical-task:last-child { border-bottom: none; }
+
+        .critical-task input[type="checkbox"] {
+            width: 18px; height: 18px; margin-top: 2px;
+            cursor: pointer; accent-color: var(--success); flex-shrink: 0;
+        }
+
+        .critical-task-content { flex: 1; }
+        .critical-task-title { font-size: 0.8125rem; font-weight: 500; }
+        .critical-task.completed .critical-task-title { text-decoration: line-through; color: var(--muted); }
+        .critical-task-meta { display: flex; gap: 0.375rem; margin-top: 0.25rem; flex-wrap: wrap; }
+        .critical-task-blocked { font-size: 0.6875rem; color: var(--danger); margin-top: 0.25rem; }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--muted);
+        }
+        .empty-state h3 { font-size: 1.125rem; margin-bottom: 0.5rem; color: var(--success); }
+
+        /* Notification banner */
+        .notification {
+            position: fixed;
+            top: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--navy);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            z-index: 2000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: opacity 0.3s;
+        }
+
+        .hidden { display: none !important; }
 
         /* Mobile */
         @media (max-width: 768px) {
             .app-container { flex-direction: column; }
             .chat-sidebar {
-                width: 100%;
-                height: 40vh;
-                border-left: none;
-                border-top: 1px solid #e5e7eb;
+                width: 100%; height: 40vh;
+                border-left: none; border-top: 1px solid #e5e7eb;
             }
-            .chat-sidebar.collapsed {
-                width: 100%;
-                height: 48px;
-            }
+            .chat-sidebar.collapsed { width: 100%; height: 48px; }
             .chat-sidebar.collapsed .chat-header {
-                writing-mode: horizontal-tb;
-                padding: 0.75rem 1rem;
+                writing-mode: horizontal-tb; padding: 0.75rem 1rem;
             }
             .chat-sidebar.collapsed .chat-header h3 { transform: none; }
             .weeks-grid { grid-template-columns: 1fr; }
             .header-stats { display: none; }
+            .action-bar { flex-wrap: wrap; }
         }
-
-        .hidden { display: none !important; }
     </style>
 </head>
 <body>
     <div class="app-container">
-        <!-- Main Content -->
         <div class="main-content">
             <div class="main-header">
                 <h1>Myelin & Sleep Loss Paper</h1>
@@ -795,9 +632,17 @@
                 <button class="btn btn-primary" onclick="autoAdjust()">Auto-Adjust</button>
                 <button class="btn btn-outline" onclick="addNewTask()">+ Add Task</button>
                 <button class="btn btn-outline" onclick="addWeek()">+ Add Week</button>
-                <div class="view-toggle">
-                    <button class="view-btn active" onclick="switchView('tasks')">Tasks</button>
-                    <button class="view-btn" onclick="switchView('figures')">Figures</button>
+                <div class="action-right">
+                    <button class="btn btn-outline btn-sm" onclick="exportData()">Export</button>
+                    <button class="btn btn-outline btn-sm" onclick="document.getElementById('importFile').click()">Import</button>
+                    <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
+                    <button class="btn btn-outline btn-sm" onclick="resetData()">Reset</button>
+                    <div class="view-toggle">
+                        <button class="view-btn active" onclick="switchView('tasks')">Timeline</button>
+                        <button class="view-btn" onclick="switchView('figures')">Figures</button>
+                        <button class="view-btn" onclick="switchView('thisweek')">This Week</button>
+                        <button class="view-btn" onclick="switchView('critical')">Critical</button>
+                    </div>
                 </div>
             </div>
 
@@ -805,51 +650,16 @@
                 <div class="tasks-view" id="tasksView">
                     <div class="weeks-grid" id="weeksGrid"></div>
                 </div>
-                <div class="figures-view" id="figuresView">
-                    <div class="figures-grid">
-                        <div class="figure-card">
-                            <h3>Figure 1: EM Phenotype <span class="figure-status status-complete">Complete</span></h3>
-                            <ul class="panel-list">
-                                <li class="panel-item"><span class="panel-icon panel-done">✓</span> EM: Non-SD vs SD</li>
-                                <li class="panel-item"><span class="panel-icon panel-done">✓</span> Myelinated axon counts</li>
-                                <li class="panel-item"><span class="panel-icon panel-done">✓</span> Myelin debris</li>
-                            </ul>
-                        </div>
-                        <div class="figure-card">
-                            <h3>Figure 2: Proteins + Lipids <span class="figure-status status-in_progress">In Progress</span></h3>
-                            <ul class="panel-list">
-                                <li class="panel-item"><span class="panel-icon panel-done">✓</span> EM decompaction</li>
-                                <li class="panel-item"><span class="panel-icon panel-done">✓</span> PLP Western blot</li>
-                                <li class="panel-item"><span class="panel-icon panel-pending"></span> MAG quantification</li>
-                                <li class="panel-item"><span class="panel-icon panel-done">✓</span> MBP ELISA</li>
-                                <li class="panel-item"><span class="panel-icon panel-pending"></span> Mass spectrometry</li>
-                            </ul>
-                        </div>
-                        <div class="figure-card">
-                            <h3>Figure 3: Cellular Response <span class="figure-status status-not_started">Not Started</span></h3>
-                            <ul class="panel-list">
-                                <li class="panel-item"><span class="panel-icon panel-done">✓</span> Dark microglia</li>
-                                <li class="panel-item"><span class="panel-icon panel-pending"></span> Olig2/CC1 IHC</li>
-                                <li class="panel-item"><span class="panel-icon panel-pending"></span> DegeneroTag</li>
-                            </ul>
-                        </div>
-                        <div class="figure-card">
-                            <h3>Figure 4: Recovery Failure <span class="figure-status status-partial">Partial</span></h3>
-                            <ul class="panel-list">
-                                <li class="panel-item"><span class="panel-icon panel-done">✓</span> Recovery EM</li>
-                                <li class="panel-item"><span class="panel-icon panel-pending"></span> Recovery WBs</li>
-                                <li class="panel-item"><span class="panel-icon panel-pending"></span> Olig counts</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+                <div class="figures-view" id="figuresView"></div>
+                <div class="thisweek-view" id="thisweekView"></div>
+                <div class="critical-view" id="criticalView"></div>
             </div>
         </div>
 
         <!-- Chat Sidebar -->
         <div class="chat-sidebar" id="chatSidebar">
             <div class="chat-header">
-                <h3>AI Assistant</h3>
+                <h3>Research Assistant</h3>
                 <button class="chat-toggle" onclick="toggleChat()">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M15 18l-6-6 6-6"/>
@@ -859,14 +669,15 @@
             <div class="chat-content" id="chatMessages">
                 <div class="chat-welcome">
                     <h4>Research Assistant</h4>
-                    <p>Ask about experiments, results, or next steps.</p>
+                    <p>Ask about experiments, results, next steps, or reviewer concerns.</p>
                 </div>
             </div>
             <div class="chat-input-container">
                 <div class="quick-prompts">
-                    <button class="quick-prompt" onclick="sendQuickPrompt('What should I do this week?')">This week?</button>
-                    <button class="quick-prompt" onclick="sendQuickPrompt('Interpret my results')">Results</button>
-                    <button class="quick-prompt" onclick="sendQuickPrompt('What will reviewers ask?')">Reviewers</button>
+                    <button class="quick-prompt" onclick="sendQuickPrompt('What should I focus on this week?')">This week?</button>
+                    <button class="quick-prompt" onclick="sendQuickPrompt('Summarize what is complete and key findings')">Results</button>
+                    <button class="quick-prompt" onclick="sendQuickPrompt('What will Nature reviewers likely ask?')">Reviewers</button>
+                    <button class="quick-prompt" onclick="sendQuickPrompt('What is blocking paper submission right now?')">Blocking?</button>
                 </div>
                 <div class="chat-input-row">
                     <textarea class="chat-input" id="chatInput" placeholder="Ask anything..." rows="1" onkeydown="handleKeyDown(event)"></textarea>
@@ -896,20 +707,12 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label>Week</label>
-                        <select id="editTaskWeek">
-                            <option value="1">Week 1</option>
-                            <option value="2">Week 2</option>
-                            <option value="3">Week 3</option>
-                            <option value="4">Week 4</option>
-                            <option value="5">Week 5</option>
-                            <option value="6">Week 6</option>
-                            <option value="7">Week 7</option>
-                            <option value="8">Week 8</option>
-                        </select>
+                        <select id="editTaskWeek"></select>
                     </div>
                     <div class="form-group">
                         <label>Priority</label>
                         <select id="editTaskPriority">
+                            <option value="low">Low</option>
                             <option value="medium">Medium</option>
                             <option value="high">High</option>
                             <option value="critical">Critical</option>
@@ -921,9 +724,12 @@
                     <select id="editTaskFigure">
                         <option value="">None</option>
                         <option value="1">Figure 1: EM Phenotype</option>
-                        <option value="2">Figure 2: Proteins + Lipids</option>
-                        <option value="3">Figure 3: Cellular Response</option>
-                        <option value="4">Figure 4: Recovery Failure</option>
+                        <option value="2">Figure 2: Myelin Proteins</option>
+                        <option value="3">Figure 3: Lipofuscin</option>
+                        <option value="4">Figure 4: Recovery (10d)</option>
+                        <option value="5">Figure 5: Remyelination (20d)</option>
+                        <option value="manuscript">Manuscript</option>
+                        <option value="extended">Extended Data</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -942,496 +748,800 @@
     </div>
 
     <script>
-        const STORAGE_KEY = 'myelin-paper-tracker';
-        let projectData = null;
-        let draggedTask = null;
+    // ==================== CONSTANTS ====================
+    const STORAGE_KEY = 'myelin-paper-tracker';
+    const DATA_VERSION = 2;
 
-        document.addEventListener('DOMContentLoaded', () => {
-            loadData();
-            updateUI();
-            autoResizeTextarea();
-        });
+    const FIGURE_DEFS = {
+        '1': { title: 'Figure 1: EM Phenotype (SD vs Control)', short: 'Fig 1' },
+        '2': { title: 'Figure 2: Myelin Protein Changes', short: 'Fig 2' },
+        '3': { title: 'Figure 3: Lipofuscin', short: 'Fig 3' },
+        '4': { title: 'Figure 4: Recovery Phase (10-day)', short: 'Fig 4' },
+        '5': { title: 'Figure 5: Remyelination (20-day)', short: 'Fig 5' },
+        'manuscript': { title: 'Manuscript', short: 'MS' },
+        'extended': { title: 'Extended Data', short: 'Ext' }
+    };
 
-        function loadData() {
-            const saved = localStorage.getItem(STORAGE_KEY);
-            if (saved) {
-                projectData = JSON.parse(saved);
+    // ==================== STATE ====================
+    let projectData = null;
+    let draggedTask = null;
+    let currentView = 'tasks';
+
+    // ==================== INITIALIZATION ====================
+    document.addEventListener('DOMContentLoaded', () => {
+        loadData();
+        updateUI();
+        autoResizeTextarea();
+    });
+
+    // ==================== DATA MANAGEMENT ====================
+    function loadData() {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+            const parsed = JSON.parse(saved);
+            if (parsed.dataVersion === DATA_VERSION) {
+                projectData = parsed;
             } else {
                 projectData = getDefaultData();
                 saveData();
+                showNotification('Plan updated to latest version with new tasks & Figure 5');
             }
+        } else {
+            projectData = getDefaultData();
+            saveData();
         }
+    }
 
-        function saveData() {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(projectData));
-        }
+    function saveData() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(projectData));
+    }
 
-        function updateUI() {
-            updateStats();
-            renderWeeks();
-        }
+    function exportData() {
+        const blob = new Blob([JSON.stringify(projectData, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `myelin-tracker-backup-${new Date().toISOString().split('T')[0]}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+    }
 
-        function getWeekDates(weekNum) {
-            const start = new Date(projectData.project_start);
-            start.setDate(start.getDate() + (weekNum - 1) * 7);
-            const end = new Date(start);
-            end.setDate(end.getDate() + 6);
-
-            const formatDate = (d) => {
-                const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-                return `${months[d.getMonth()]} ${d.getDate()}`;
-            };
-
-            return `${formatDate(start)} - ${formatDate(end)}`;
-        }
-
-        function updateStats() {
-            const deadline = new Date(projectData.deadline);
-            const today = new Date();
-            const daysLeft = Math.ceil((deadline - today) / (1000 * 60 * 60 * 24));
-            document.getElementById('daysLeft').textContent = daysLeft;
-
-            const projectStart = new Date(projectData.project_start);
-            const currentWeek = Math.min(Math.max(Math.floor((today - projectStart) / (1000 * 60 * 60 * 24 * 7)) + 1, 1), 8);
-            document.getElementById('currentWeek').textContent = currentWeek;
-            window.currentWeek = currentWeek;
-
-            const total = projectData.tasks.length;
-            const done = projectData.tasks.filter(t => t.completed).length;
-            const percent = Math.round((done / total) * 100);
-            document.getElementById('progressBar').style.width = `${percent}%`;
-            document.getElementById('progressPercent').textContent = percent;
-        }
-
-        function getTotalWeeks() {
-            // Get max week from tasks or default to 8
-            const maxTaskWeek = Math.max(...projectData.tasks.map(t => t.week), 8);
-            return Math.max(maxTaskWeek, projectData.totalWeeks || 8);
-        }
-
-        function renderWeeks() {
-            const grid = document.getElementById('weeksGrid');
-            grid.innerHTML = '';
-            const totalWeeks = getTotalWeeks();
-
-            for (let week = 1; week <= totalWeeks; week++) {
-                const tasks = projectData.tasks.filter(t => t.week === week);
-                const completed = tasks.filter(t => t.completed).length;
-                const isCurrent = week === window.currentWeek;
-                const weekDates = getWeekDates(week);
-
-                const card = document.createElement('div');
-                card.className = `week-card ${isCurrent ? 'current' : ''}`;
-                card.dataset.week = week;
-
-                // Drop zone events
-                card.addEventListener('dragover', handleDragOver);
-                card.addEventListener('dragleave', handleDragLeave);
-                card.addEventListener('drop', handleDrop);
-
-                card.innerHTML = `
-                    <div class="week-header">
-                        <div class="week-title-row">
-                            <span class="week-title">Week ${week}${isCurrent ? ' (Now)' : ''}</span>
-                            <span class="week-badge">${completed}/${tasks.length}</span>
-                        </div>
-                        <div class="week-dates">${weekDates}</div>
-                    </div>
-                    <div class="week-tasks" data-week="${week}">
-                        ${tasks.map(task => createTaskHTML(task)).join('')}
-                        ${tasks.length === 0 ? '<div style="padding: 1rem; text-align: center; color: var(--muted); font-size: 0.75rem;">Drop tasks here</div>' : ''}
-                    </div>
-                `;
-                grid.appendChild(card);
+    function importData(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const data = JSON.parse(e.target.result);
+                if (data.tasks && Array.isArray(data.tasks)) {
+                    projectData = data;
+                    saveData();
+                    updateUI();
+                    showNotification('Data imported successfully');
+                } else {
+                    alert('Invalid backup file format.');
+                }
+            } catch (err) {
+                alert('Failed to parse file: ' + err.message);
             }
+        };
+        reader.readAsText(file);
+        event.target.value = '';
+    }
 
-            // Add drag events to all task items
-            document.querySelectorAll('.task-item').forEach(item => {
-                item.addEventListener('dragstart', handleDragStart);
-                item.addEventListener('dragend', handleDragEnd);
-            });
+    function resetData() {
+        if (confirm('Reset all tasks to the default plan? Your current progress will be lost.\n\nTip: Export a backup first!')) {
+            projectData = getDefaultData();
+            saveData();
+            updateUI();
+            showNotification('Reset to default 8-week plan');
         }
+    }
 
-        function createTaskHTML(task) {
-            return `
-                <div class="task-item ${task.completed ? 'completed' : ''}"
-                     draggable="true"
-                     data-task-id="${task.id}"
-                     onclick="openEditModal('${task.id}')">
-                    <input type="checkbox"
-                           ${task.completed ? 'checked' : ''}
-                           onclick="event.stopPropagation()"
-                           onchange="toggleTask('${task.id}', this.checked)">
-                    <div class="task-content">
-                        <div class="task-title">${task.title}</div>
-                        <div class="task-meta">
-                            ${task.priority === 'critical' ? '<span class="task-badge badge-critical">Critical</span>' : ''}
-                            ${task.priority === 'high' ? '<span class="task-badge badge-high">High</span>' : ''}
-                            ${task.figure ? `<span class="task-badge badge-fig">Fig ${task.figure}</span>` : ''}
-                        </div>
+    function showNotification(msg) {
+        const div = document.createElement('div');
+        div.className = 'notification';
+        div.textContent = msg;
+        document.body.appendChild(div);
+        setTimeout(() => { div.style.opacity = '0'; setTimeout(() => div.remove(), 300); }, 3000);
+    }
+
+    // ==================== UI UPDATES ====================
+    function updateUI() {
+        updateStats();
+        renderCurrentView();
+    }
+
+    function renderCurrentView() {
+        if (currentView === 'tasks') renderWeeks();
+        else if (currentView === 'figures') renderFigures();
+        else if (currentView === 'thisweek') renderThisWeek();
+        else if (currentView === 'critical') renderCriticalPath();
+    }
+
+    function updateStats() {
+        const deadline = new Date(projectData.deadline);
+        const today = new Date();
+        const daysLeft = Math.max(0, Math.ceil((deadline - today) / (1000 * 60 * 60 * 24)));
+        document.getElementById('daysLeft').textContent = daysLeft;
+
+        const projectStart = new Date(projectData.project_start);
+        const cw = Math.min(Math.max(Math.floor((today - projectStart) / (1000 * 60 * 60 * 24 * 7)) + 1, 1), getTotalWeeks());
+        document.getElementById('currentWeek').textContent = cw;
+        window.currentWeek = cw;
+
+        const total = projectData.tasks.length;
+        const done = projectData.tasks.filter(t => t.completed).length;
+        const percent = total > 0 ? Math.round((done / total) * 100) : 0;
+        document.getElementById('progressBar').style.width = `${percent}%`;
+        document.getElementById('progressPercent').textContent = percent;
+    }
+
+    function getTotalWeeks() {
+        const maxTaskWeek = Math.max(...projectData.tasks.map(t => t.week), 8);
+        return Math.max(maxTaskWeek, projectData.totalWeeks || 8);
+    }
+
+    function getWeekDates(weekNum) {
+        const start = new Date(projectData.project_start);
+        start.setDate(start.getDate() + (weekNum - 1) * 7);
+        const end = new Date(start);
+        end.setDate(end.getDate() + 6);
+        const fmt = (d) => {
+            const m = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+            return `${m[d.getMonth()]} ${d.getDate()}`;
+        };
+        return `${fmt(start)} - ${fmt(end)}`;
+    }
+
+    // ==================== HELPER: BLOCKED CHECK ====================
+    function isTaskBlocked(task) {
+        if (!task.blockedBy || task.blockedBy.length === 0) return false;
+        return task.blockedBy.some(depId => {
+            const dep = projectData.tasks.find(t => t.id === depId);
+            return dep && !dep.completed;
+        });
+    }
+
+    function getBlockingNames(task) {
+        if (!task.blockedBy) return [];
+        return task.blockedBy
+            .map(depId => projectData.tasks.find(t => t.id === depId))
+            .filter(dep => dep && !dep.completed)
+            .map(dep => dep.title);
+    }
+
+    // ==================== HELPER: FIGURE BADGE ====================
+    function getFigureBadgeHTML(figure) {
+        if (!figure) return '';
+        if (figure === 'manuscript') return '<span class="task-badge badge-manuscript">MS</span>';
+        if (figure === 'extended') return '<span class="task-badge badge-extended">Ext</span>';
+        return `<span class="task-badge badge-fig">Fig ${figure}</span>`;
+    }
+
+    function getPriorityBadgeHTML(priority) {
+        if (priority === 'critical') return '<span class="task-badge badge-critical">Critical</span>';
+        if (priority === 'high') return '<span class="task-badge badge-high">High</span>';
+        if (priority === 'medium') return '<span class="task-badge badge-medium">Medium</span>';
+        if (priority === 'low') return '<span class="task-badge badge-low">Low</span>';
+        return '';
+    }
+
+    // ==================== TASKS VIEW (Timeline) ====================
+    function renderWeeks() {
+        const grid = document.getElementById('weeksGrid');
+        grid.innerHTML = '';
+        const totalWeeks = getTotalWeeks();
+
+        for (let week = 1; week <= totalWeeks; week++) {
+            const tasks = projectData.tasks.filter(t => t.week === week);
+            const completed = tasks.filter(t => t.completed).length;
+            const isCurrent = week === window.currentWeek;
+
+            const card = document.createElement('div');
+            card.className = `week-card ${isCurrent ? 'current' : ''}`;
+            card.dataset.week = week;
+            card.addEventListener('dragover', handleDragOver);
+            card.addEventListener('dragleave', handleDragLeave);
+            card.addEventListener('drop', handleDrop);
+
+            card.innerHTML = `
+                <div class="week-header">
+                    <div class="week-title-row">
+                        <span class="week-title">Week ${week}${isCurrent ? ' (Now)' : ''}</span>
+                        <span class="week-badge">${completed}/${tasks.length}</span>
                     </div>
+                    <div class="week-dates">${getWeekDates(week)}</div>
+                </div>
+                <div class="week-tasks" data-week="${week}">
+                    ${tasks.map(task => createTaskHTML(task)).join('')}
+                    ${tasks.length === 0 ? '<div style="padding:1rem;text-align:center;color:var(--muted);font-size:0.75rem;">Drop tasks here</div>' : ''}
                 </div>
             `;
+            grid.appendChild(card);
         }
 
-        // Drag and Drop
-        function handleDragStart(e) {
-            draggedTask = e.target.dataset.taskId;
-            e.target.classList.add('dragging');
-            e.dataTransfer.effectAllowed = 'move';
-        }
+        document.querySelectorAll('.task-item').forEach(item => {
+            item.addEventListener('dragstart', handleDragStart);
+            item.addEventListener('dragend', handleDragEnd);
+        });
+    }
 
-        function handleDragEnd(e) {
-            e.target.classList.remove('dragging');
-            document.querySelectorAll('.week-card').forEach(card => {
-                card.classList.remove('drag-over');
+    function createTaskHTML(task) {
+        const blocked = isTaskBlocked(task);
+        const blockedClass = blocked && !task.completed ? ' blocked' : '';
+        const completedClass = task.completed ? ' completed' : '';
+
+        return `
+            <div class="task-item${completedClass}${blockedClass}"
+                 draggable="true"
+                 data-task-id="${task.id}"
+                 onclick="openEditModal('${task.id}')">
+                <input type="checkbox"
+                       ${task.completed ? 'checked' : ''}
+                       onclick="event.stopPropagation()"
+                       onchange="toggleTask('${task.id}', this.checked)">
+                <div class="task-content">
+                    <div class="task-title">${task.title}</div>
+                    <div class="task-meta">
+                        ${getPriorityBadgeHTML(task.priority)}
+                        ${getFigureBadgeHTML(task.figure)}
+                        ${blocked && !task.completed ? '<span class="task-badge badge-blocked">Blocked</span>' : ''}
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // ==================== FIGURES VIEW ====================
+    function renderFigures() {
+        const container = document.getElementById('figuresView');
+        container.innerHTML = '<div class="figures-grid" id="figuresGrid"></div>';
+        const grid = container.querySelector('#figuresGrid');
+
+        for (const [figKey, figDef] of Object.entries(FIGURE_DEFS)) {
+            const tasks = projectData.tasks.filter(t => t.figure === figKey);
+            if (tasks.length === 0) continue;
+
+            const done = tasks.filter(t => t.completed).length;
+            const total = tasks.length;
+            const pct = Math.round((done / total) * 100);
+
+            let statusClass, statusLabel;
+            if (done === total) { statusClass = 'status-complete'; statusLabel = 'Complete'; }
+            else if (done > 0) { statusClass = 'status-in-progress'; statusLabel = `${pct}%`; }
+            else { statusClass = 'status-not-started'; statusLabel = 'Not Started'; }
+
+            const card = document.createElement('div');
+            card.className = 'figure-card';
+            card.innerHTML = `
+                <div class="figure-card-header">
+                    <h3>${figDef.title}</h3>
+                    <span class="figure-status ${statusClass}">${statusLabel}</span>
+                </div>
+                <div class="figure-progress-bar">
+                    <div class="figure-progress-fill" style="width:${pct}%"></div>
+                </div>
+                <ul class="figure-task-list">
+                    ${tasks.map(t => {
+                        const blocked = isTaskBlocked(t);
+                        let iconClass = t.completed ? 'icon-done' : (blocked ? 'icon-blocked' : 'icon-pending');
+                        let iconContent = t.completed ? '&#10003;' : (blocked ? '!' : '');
+                        let textClass = t.completed ? 'done' : '';
+                        return `<li class="figure-task-item">
+                            <span class="figure-task-icon ${iconClass}">${iconContent}</span>
+                            <span class="figure-task-text ${textClass}">${t.title}</span>
+                        </li>`;
+                    }).join('')}
+                </ul>
+            `;
+            grid.appendChild(card);
+        }
+    }
+
+    // ==================== THIS WEEK VIEW ====================
+    function renderThisWeek() {
+        const container = document.getElementById('thisweekView');
+        const cw = window.currentWeek || 1;
+        const tasks = projectData.tasks.filter(t => t.week === cw);
+        const remaining = tasks.filter(t => !t.completed).length;
+
+        container.innerHTML = `
+            <div class="thisweek-header">
+                <h2>Week ${cw} — ${getWeekDates(cw)}</h2>
+                <p>${remaining} task${remaining !== 1 ? 's' : ''} remaining</p>
+            </div>
+            <div class="thisweek-tasks">
+                ${tasks.length === 0
+                    ? '<div class="empty-state"><h3>No tasks this week</h3><p>Use Auto-Adjust to pull overdue tasks forward.</p></div>'
+                    : tasks.map(t => {
+                        const blocked = isTaskBlocked(t);
+                        const cls = [
+                            'thisweek-task',
+                            t.completed ? 'completed' : '',
+                            blocked && !t.completed ? 'blocked' : ''
+                        ].filter(Boolean).join(' ');
+                        return `
+                            <div class="${cls}" onclick="openEditModal('${t.id}')">
+                                <input type="checkbox" ${t.completed ? 'checked' : ''}
+                                       onclick="event.stopPropagation()"
+                                       onchange="toggleTask('${t.id}', this.checked)">
+                                <div class="thisweek-task-content">
+                                    <div class="thisweek-task-title">${t.title}</div>
+                                    <div class="thisweek-task-meta">
+                                        ${getPriorityBadgeHTML(t.priority)}
+                                        ${getFigureBadgeHTML(t.figure)}
+                                        ${blocked && !t.completed ? '<span class="task-badge badge-blocked">Blocked</span>' : ''}
+                                    </div>
+                                    ${t.notes ? `<div class="thisweek-task-notes">${t.notes}</div>` : ''}
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+            </div>
+        `;
+    }
+
+    // ==================== CRITICAL PATH VIEW ====================
+    function renderCriticalPath() {
+        const container = document.getElementById('criticalView');
+
+        // Find all incomplete tasks that are critical/high priority or are blocking something
+        const blockingTaskIds = new Set();
+        projectData.tasks.forEach(t => {
+            if (t.blockedBy) {
+                t.blockedBy.forEach(id => blockingTaskIds.add(id));
+            }
+        });
+
+        const criticalTasks = projectData.tasks.filter(t =>
+            !t.completed && (t.priority === 'critical' || t.priority === 'high' || blockingTaskIds.has(t.id))
+        );
+
+        // Group by figure
+        const groups = {};
+        criticalTasks.forEach(t => {
+            const key = t.figure || 'general';
+            if (!groups[key]) groups[key] = [];
+            groups[key].push(t);
+        });
+
+        const totalCritical = criticalTasks.length;
+
+        container.innerHTML = `
+            <div class="critical-header">
+                <h2>Critical Path</h2>
+                <p>${totalCritical} item${totalCritical !== 1 ? 's' : ''} blocking paper submission</p>
+            </div>
+            ${totalCritical === 0
+                ? '<div class="empty-state"><h3>All clear!</h3><p>No critical or high-priority blocking items remain.</p></div>'
+                : Object.entries(groups).sort(([a], [b]) => {
+                    const order = ['1','2','3','4','5','manuscript','extended','general'];
+                    return order.indexOf(a) - order.indexOf(b);
+                }).map(([key, tasks]) => {
+                    const label = FIGURE_DEFS[key] ? FIGURE_DEFS[key].title : 'General';
+                    return `
+                        <div class="critical-group">
+                            <div class="critical-group-header">${label}</div>
+                            ${tasks.sort((a,b) => a.week - b.week).map(t => {
+                                const blocked = isTaskBlocked(t);
+                                const blockNames = getBlockingNames(t);
+                                return `
+                                    <div class="critical-task" onclick="openEditModal('${t.id}')">
+                                        <input type="checkbox" ${t.completed ? 'checked' : ''}
+                                               onclick="event.stopPropagation()"
+                                               onchange="toggleTask('${t.id}', this.checked)">
+                                        <div class="critical-task-content">
+                                            <div class="critical-task-title">${t.title}</div>
+                                            <div class="critical-task-meta">
+                                                ${getPriorityBadgeHTML(t.priority)}
+                                                <span class="task-badge badge-fig">Week ${t.week}</span>
+                                                ${blocked ? '<span class="task-badge badge-blocked">Blocked</span>' : ''}
+                                            </div>
+                                            ${blocked ? `<div class="critical-task-blocked">Waiting on: ${blockNames.join(', ')}</div>` : ''}
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    `;
+                }).join('')}
+        `;
+    }
+
+    // ==================== VIEW SWITCHING ====================
+    function switchView(view) {
+        currentView = view;
+        document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+        document.querySelector(`.view-btn[onclick="switchView('${view}')"]`).classList.add('active');
+
+        document.getElementById('tasksView').classList.toggle('hidden', view !== 'tasks');
+        document.getElementById('figuresView').classList.remove('active');
+        document.getElementById('thisweekView').classList.remove('active');
+        document.getElementById('criticalView').classList.remove('active');
+
+        if (view === 'tasks') { document.getElementById('tasksView').classList.remove('hidden'); renderWeeks(); }
+        else if (view === 'figures') { document.getElementById('figuresView').classList.add('active'); renderFigures(); }
+        else if (view === 'thisweek') { document.getElementById('thisweekView').classList.add('active'); renderThisWeek(); }
+        else if (view === 'critical') { document.getElementById('criticalView').classList.add('active'); renderCriticalPath(); }
+    }
+
+    // ==================== DRAG AND DROP ====================
+    function handleDragStart(e) {
+        draggedTask = e.target.dataset.taskId;
+        e.target.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+    }
+
+    function handleDragEnd(e) {
+        e.target.classList.remove('dragging');
+        document.querySelectorAll('.week-card').forEach(c => c.classList.remove('drag-over'));
+    }
+
+    function handleDragOver(e) {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        const card = e.target.closest('.week-card');
+        if (card) card.classList.add('drag-over');
+    }
+
+    function handleDragLeave(e) {
+        const card = e.target.closest('.week-card');
+        if (card && !card.contains(e.relatedTarget)) card.classList.remove('drag-over');
+    }
+
+    function handleDrop(e) {
+        e.preventDefault();
+        const card = e.target.closest('.week-card');
+        if (card && draggedTask) {
+            const newWeek = parseInt(card.dataset.week);
+            const task = projectData.tasks.find(t => t.id === draggedTask);
+            if (task && task.week !== newWeek) {
+                task.week = newWeek;
+                saveData();
+                renderWeeks();
+            }
+        }
+        document.querySelectorAll('.week-card').forEach(c => c.classList.remove('drag-over'));
+        draggedTask = null;
+    }
+
+    // ==================== TASK MODAL ====================
+    function openEditModal(taskId) {
+        const task = projectData.tasks.find(t => t.id === taskId);
+        if (!task) return;
+        updateWeekSelector();
+        document.getElementById('editTaskId').value = taskId;
+        document.getElementById('editTaskTitle').value = task.title;
+        document.getElementById('editTaskWeek').value = task.week;
+        document.getElementById('editTaskPriority').value = task.priority || 'medium';
+        document.getElementById('editTaskFigure').value = task.figure || '';
+        document.getElementById('editTaskNotes').value = task.notes || '';
+        document.getElementById('modalTitle').textContent = 'Edit Task';
+        document.getElementById('deleteTaskBtn').style.display = 'block';
+        document.getElementById('taskModal').classList.add('active');
+    }
+
+    function addNewTask() {
+        updateWeekSelector();
+        document.getElementById('editTaskId').value = '';
+        document.getElementById('editTaskTitle').value = '';
+        document.getElementById('editTaskWeek').value = window.currentWeek || 1;
+        document.getElementById('editTaskPriority').value = 'medium';
+        document.getElementById('editTaskFigure').value = '';
+        document.getElementById('editTaskNotes').value = '';
+        document.getElementById('modalTitle').textContent = 'Add Task';
+        document.getElementById('deleteTaskBtn').style.display = 'none';
+        document.getElementById('taskModal').classList.add('active');
+    }
+
+    function closeModal() {
+        document.getElementById('taskModal').classList.remove('active');
+    }
+
+    function saveTask() {
+        const taskId = document.getElementById('editTaskId').value;
+        const title = document.getElementById('editTaskTitle').value.trim();
+        const week = parseInt(document.getElementById('editTaskWeek').value);
+        const priority = document.getElementById('editTaskPriority').value;
+        const figure = document.getElementById('editTaskFigure').value || null;
+        const notes = document.getElementById('editTaskNotes').value;
+
+        if (!title) { alert('Please enter a task name'); return; }
+
+        if (taskId) {
+            const task = projectData.tasks.find(t => t.id === taskId);
+            if (task) {
+                task.title = title;
+                task.week = week;
+                task.priority = priority;
+                task.figure = figure;
+                task.notes = notes;
+            }
+        } else {
+            projectData.tasks.push({
+                id: 'task-' + Date.now(),
+                title, week, completed: false, priority, figure, notes,
+                blockedBy: []
             });
         }
 
-        function handleDragOver(e) {
-            e.preventDefault();
-            e.dataTransfer.dropEffect = 'move';
-            const card = e.target.closest('.week-card');
-            if (card) card.classList.add('drag-over');
-        }
+        saveData();
+        updateUI();
+        closeModal();
+    }
 
-        function handleDragLeave(e) {
-            const card = e.target.closest('.week-card');
-            if (card && !card.contains(e.relatedTarget)) {
-                card.classList.remove('drag-over');
-            }
-        }
-
-        function handleDrop(e) {
-            e.preventDefault();
-            const card = e.target.closest('.week-card');
-            if (card && draggedTask) {
-                const newWeek = parseInt(card.dataset.week);
-                const task = projectData.tasks.find(t => t.id === draggedTask);
-                if (task && task.week !== newWeek) {
-                    task.week = newWeek;
-                    saveData();
-                    renderWeeks();
-                }
-            }
-            document.querySelectorAll('.week-card').forEach(c => c.classList.remove('drag-over'));
-            draggedTask = null;
-        }
-
-        // Task Modal
-        function openEditModal(taskId) {
-            const task = projectData.tasks.find(t => t.id === taskId);
-            if (!task) return;
-
-            updateWeekSelector();
-            document.getElementById('editTaskId').value = taskId;
-            document.getElementById('editTaskTitle').value = task.title;
-            document.getElementById('editTaskWeek').value = task.week;
-            document.getElementById('editTaskPriority').value = task.priority || 'medium';
-            document.getElementById('editTaskFigure').value = task.figure || '';
-            document.getElementById('editTaskNotes').value = task.notes || '';
-            document.getElementById('modalTitle').textContent = 'Edit Task';
-            document.getElementById('deleteTaskBtn').style.display = 'block';
-
-            document.getElementById('taskModal').classList.add('active');
-        }
-
-        function addNewTask() {
-            updateWeekSelector();
-            document.getElementById('editTaskId').value = '';
-            document.getElementById('editTaskTitle').value = '';
-            document.getElementById('editTaskWeek').value = window.currentWeek || 1;
-            document.getElementById('editTaskPriority').value = 'medium';
-            document.getElementById('editTaskFigure').value = '';
-            document.getElementById('editTaskNotes').value = '';
-            document.getElementById('modalTitle').textContent = 'Add Task';
-            document.getElementById('deleteTaskBtn').style.display = 'none';
-
-            document.getElementById('taskModal').classList.add('active');
-        }
-
-        function closeModal() {
-            document.getElementById('taskModal').classList.remove('active');
-        }
-
-        function saveTask() {
-            const taskId = document.getElementById('editTaskId').value;
-            const title = document.getElementById('editTaskTitle').value.trim();
-            const week = parseInt(document.getElementById('editTaskWeek').value);
-            const priority = document.getElementById('editTaskPriority').value;
-            const figure = document.getElementById('editTaskFigure').value;
-            const notes = document.getElementById('editTaskNotes').value;
-
-            if (!title) {
-                alert('Please enter a task name');
-                return;
-            }
-
-            if (taskId) {
-                // Edit existing
-                const task = projectData.tasks.find(t => t.id === taskId);
-                if (task) {
-                    task.title = title;
-                    task.week = week;
-                    task.priority = priority;
-                    task.figure = figure ? parseInt(figure) : null;
-                    task.notes = notes;
-                }
-            } else {
-                // Add new
-                const newId = 'task-' + Date.now();
-                projectData.tasks.push({
-                    id: newId,
-                    title: title,
-                    week: week,
-                    completed: false,
-                    priority: priority,
-                    figure: figure ? parseInt(figure) : null,
-                    notes: notes
-                });
-            }
-
+    function deleteTask() {
+        const taskId = document.getElementById('editTaskId').value;
+        if (!taskId) return;
+        if (confirm('Delete this task?')) {
+            projectData.tasks = projectData.tasks.filter(t => t.id !== taskId);
+            // Clean up blockedBy references
+            projectData.tasks.forEach(t => {
+                if (t.blockedBy) t.blockedBy = t.blockedBy.filter(id => id !== taskId);
+            });
             saveData();
             updateUI();
             closeModal();
         }
+    }
 
-        function deleteTask() {
-            const taskId = document.getElementById('editTaskId').value;
-            if (!taskId) return;
-
-            if (confirm('Delete this task?')) {
-                projectData.tasks = projectData.tasks.filter(t => t.id !== taskId);
-                saveData();
-                updateUI();
-                closeModal();
-            }
-        }
-
-        function toggleTask(taskId, completed) {
-            const task = projectData.tasks.find(t => t.id === taskId);
-            if (task) {
-                task.completed = completed;
-                saveData();
-                updateUI();
-            }
-        }
-
-        function autoAdjust() {
-            // Client-side auto-adjust based on current week
-            const today = new Date();
-            const projectStart = new Date(projectData.project_start);
-            const currentWeek = Math.min(Math.max(Math.floor((today - projectStart) / (1000 * 60 * 60 * 24 * 7)) + 1, 1), getTotalWeeks());
-
-            // Move incomplete past tasks to current week
-            let moved = 0;
-            projectData.tasks.forEach(task => {
-                if (!task.completed && task.week < currentWeek) {
-                    task.week = currentWeek;
-                    moved++;
-                }
-            });
-
+    function toggleTask(taskId, completed) {
+        const task = projectData.tasks.find(t => t.id === taskId);
+        if (task) {
+            task.completed = completed;
             saveData();
             updateUI();
-            alert(`Schedule adjusted: ${moved} overdue task(s) moved to Week ${currentWeek}`);
         }
+    }
 
-        function addWeek() {
-            const currentTotal = getTotalWeeks();
-            projectData.totalWeeks = currentTotal + 1;
-
-            // Extend deadline by 1 week
-            const deadline = new Date(projectData.deadline);
-            deadline.setDate(deadline.getDate() + 7);
-            projectData.deadline = deadline.toISOString().split('T')[0];
-
-            saveData();
-            updateUI();
-            updateWeekSelector();
-        }
-
-        function updateWeekSelector() {
-            const select = document.getElementById('editTaskWeek');
-            const currentValue = select.value;
-            const totalWeeks = getTotalWeeks();
-
-            select.innerHTML = '';
-            for (let i = 1; i <= totalWeeks; i++) {
-                const option = document.createElement('option');
-                option.value = i;
-                option.textContent = `Week ${i}`;
-                select.appendChild(option);
+    // ==================== AUTO ADJUST ====================
+    function autoAdjust() {
+        const cw = window.currentWeek || 1;
+        let moved = 0;
+        projectData.tasks.forEach(task => {
+            if (!task.completed && task.week < cw) {
+                task.week = cw;
+                moved++;
             }
-            select.value = currentValue;
-        }
+        });
+        saveData();
+        updateUI();
+        showNotification(`${moved} overdue task${moved !== 1 ? 's' : ''} moved to Week ${cw}`);
+    }
 
-        function switchView(view) {
-            document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
-            document.querySelector(`.view-btn[onclick="switchView('${view}')"]`).classList.add('active');
-            document.getElementById('tasksView').classList.toggle('hidden', view !== 'tasks');
-            document.getElementById('figuresView').classList.toggle('hidden', view !== 'figures');
-            document.getElementById('figuresView').classList.toggle('active', view === 'figures');
-        }
+    function addWeek() {
+        const currentTotal = getTotalWeeks();
+        projectData.totalWeeks = currentTotal + 1;
+        const deadline = new Date(projectData.deadline);
+        deadline.setDate(deadline.getDate() + 7);
+        projectData.deadline = deadline.toISOString().split('T')[0];
+        saveData();
+        updateUI();
+    }
 
-        function toggleChat() {
-            document.getElementById('chatSidebar').classList.toggle('collapsed');
+    function updateWeekSelector() {
+        const select = document.getElementById('editTaskWeek');
+        const currentValue = select.value;
+        const totalWeeks = getTotalWeeks();
+        select.innerHTML = '';
+        for (let i = 1; i <= totalWeeks; i++) {
+            const option = document.createElement('option');
+            option.value = i;
+            option.textContent = `Week ${i}`;
+            select.appendChild(option);
         }
+        select.value = currentValue;
+    }
 
-        function autoResizeTextarea() {
-            const textarea = document.getElementById('chatInput');
-            textarea.addEventListener('input', () => {
-                textarea.style.height = 'auto';
-                textarea.style.height = Math.min(textarea.scrollHeight, 80) + 'px';
+    // ==================== CHAT ====================
+    function toggleChat() {
+        document.getElementById('chatSidebar').classList.toggle('collapsed');
+    }
+
+    function autoResizeTextarea() {
+        const textarea = document.getElementById('chatInput');
+        textarea.addEventListener('input', () => {
+            textarea.style.height = 'auto';
+            textarea.style.height = Math.min(textarea.scrollHeight, 80) + 'px';
+        });
+    }
+
+    function handleKeyDown(e) {
+        if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+    }
+
+    function sendQuickPrompt(prompt) {
+        document.getElementById('chatInput').value = prompt;
+        sendMessage();
+    }
+
+    async function sendMessage() {
+        const input = document.getElementById('chatInput');
+        const message = input.value.trim();
+        if (!message) return;
+
+        const sendBtn = document.getElementById('sendBtn');
+        sendBtn.disabled = true;
+        input.value = '';
+        input.style.height = 'auto';
+
+        addChatMessage('user', message);
+
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'chat-message assistant';
+        typingDiv.id = 'typing';
+        typingDiv.innerHTML = '<div class="message-bubble"><div class="typing-indicator"><span></span><span></span><span></span></div></div>';
+        document.getElementById('chatMessages').appendChild(typingDiv);
+        scrollChat();
+
+        try {
+            const res = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message, tasks: projectData.tasks })
             });
-        }
+            const data = await res.json();
+            document.getElementById('typing')?.remove();
+            addChatMessage('assistant', data.message || data.response);
 
-        function handleKeyDown(e) {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                sendMessage();
-            }
-        }
-
-        function sendQuickPrompt(prompt) {
-            document.getElementById('chatInput').value = prompt;
-            sendMessage();
-        }
-
-        async function sendMessage() {
-            const input = document.getElementById('chatInput');
-            const message = input.value.trim();
-            if (!message) return;
-
-            const sendBtn = document.getElementById('sendBtn');
-            sendBtn.disabled = true;
-            input.value = '';
-            input.style.height = 'auto';
-
-            addChatMessage('user', message);
-
-            const typingDiv = document.createElement('div');
-            typingDiv.className = 'chat-message assistant';
-            typingDiv.id = 'typing';
-            typingDiv.innerHTML = `<div class="message-bubble"><div class="typing-indicator"><span></span><span></span><span></span></div></div>`;
-            document.getElementById('chatMessages').appendChild(typingDiv);
-            scrollChat();
-
-            try {
-                const res = await fetch('/api/chat', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        message,
-                        tasks: projectData.tasks
-                    })
+            if (data.task_updates?.length > 0) {
+                data.task_updates.forEach(update => {
+                    if (update.action === 'move') {
+                        const task = projectData.tasks.find(t => t.id === update.task_id);
+                        if (task) task.week = update.new_week;
+                    } else if (update.action === 'complete') {
+                        const task = projectData.tasks.find(t => t.id === update.task_id);
+                        if (task) task.completed = true;
+                    } else if (update.action === 'add') {
+                        projectData.tasks.push({
+                            id: 'task-' + Date.now(),
+                            title: update.title,
+                            week: update.week,
+                            completed: false,
+                            priority: update.priority || 'medium',
+                            figure: update.figure || null,
+                            notes: '',
+                            blockedBy: []
+                        });
+                    } else if (update.action === 'delete') {
+                        projectData.tasks = projectData.tasks.filter(t => t.id !== update.task_id);
+                    }
                 });
-                const data = await res.json();
-                document.getElementById('typing')?.remove();
-                addChatMessage('assistant', data.message || data.response);
-
-                // Apply task updates locally
-                if (data.task_updates?.length > 0) {
-                    data.task_updates.forEach(update => {
-                        if (update.action === 'move') {
-                            const task = projectData.tasks.find(t => t.id === update.task_id);
-                            if (task) task.week = update.new_week;
-                        } else if (update.action === 'complete') {
-                            const task = projectData.tasks.find(t => t.id === update.task_id);
-                            if (task) task.completed = true;
-                        } else if (update.action === 'add') {
-                            projectData.tasks.push({
-                                id: 'task-' + Date.now(),
-                                title: update.title,
-                                week: update.week,
-                                completed: false,
-                                priority: update.priority || 'medium',
-                                figure: update.figure || null
-                            });
-                        } else if (update.action === 'delete') {
-                            projectData.tasks = projectData.tasks.filter(t => t.id !== update.task_id);
-                        }
-                    });
-                    saveData();
-                    updateUI();
-                }
-            } catch (e) {
-                document.getElementById('typing')?.remove();
-                addChatMessage('assistant', 'Error connecting to AI. Please check your setup.');
+                saveData();
+                updateUI();
             }
-
-            sendBtn.disabled = false;
+        } catch (e) {
+            document.getElementById('typing')?.remove();
+            addChatMessage('assistant', 'Error connecting to AI assistant. Check your connection and try again.');
         }
 
-        function addChatMessage(role, content) {
-            const container = document.getElementById('chatMessages');
-            const div = document.createElement('div');
-            div.className = `chat-message ${role}`;
+        sendBtn.disabled = false;
+    }
 
-            let formatted = content
-                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                .replace(/\n\n/g, '</p><p>')
-                .replace(/```json:task_update[\s\S]*?```/g, '');
+    function addChatMessage(role, content) {
+        const container = document.getElementById('chatMessages');
+        const div = document.createElement('div');
+        div.className = `chat-message ${role}`;
+        let formatted = content
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\n\n/g, '</p><p>')
+            .replace(/```json:task_update[\s\S]*?```/g, '')
+            .replace(/```task_update[\s\S]*?```/g, '');
+        div.innerHTML = `<div class="message-bubble"><p>${formatted}</p></div>`;
+        container.appendChild(div);
+        scrollChat();
+    }
 
-            div.innerHTML = `<div class="message-bubble"><p>${formatted}</p></div>`;
-            container.appendChild(div);
-            scrollChat();
-        }
+    function scrollChat() {
+        const container = document.getElementById('chatMessages');
+        container.scrollTop = container.scrollHeight;
+    }
 
-        function scrollChat() {
-            const container = document.getElementById('chatMessages');
-            container.scrollTop = container.scrollHeight;
-        }
+    // ==================== MODAL EVENTS ====================
+    document.getElementById('taskModal').addEventListener('click', (e) => {
+        if (e.target.id === 'taskModal') closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
+    });
 
-        // Close modal on outside click
-        document.getElementById('taskModal').addEventListener('click', (e) => {
-            if (e.target.id === 'taskModal') closeModal();
-        });
+    // ==================== DEFAULT DATA ====================
+    function getDefaultData() {
+        return {
+            dataVersion: DATA_VERSION,
+            project_start: "2026-02-09",
+            deadline: "2026-04-05",
+            totalWeeks: 8,
+            tasks: [
+                // ===== WEEK 1-2: Critical Quantification =====
+                {id: "gratio-20d", title: "g-ratio quantification (20d recovery)", week: 1, completed: false, priority: "critical", figure: "5",
+                 notes: "Measure g-ratios for ~100+ axons per animal at 20d recovery. Core EM images exist.", blockedBy: []},
+                {id: "axon-counts-20d", title: "Myelinated axon counts at 20d recovery", week: 1, completed: false, priority: "critical", figure: "5",
+                 notes: "Count myelinated axon proportion: control vs SD vs 10d vs 20d recovery.", blockedBy: []},
+                {id: "mag-densitometry", title: "MAG densitometry + statistical analysis", week: 1, completed: false, priority: "high", figure: "2",
+                 notes: "Finalize Western blot densitometry for MAG. Run stats.", blockedBy: []},
+                {id: "lipofuscin-quant", title: "Lipofuscin quantification", week: 1, completed: false, priority: "high", figure: "3",
+                 notes: "Count lipofuscin granules per neuronal soma. Check if already partially done.", blockedBy: []},
 
-        // Close modal on Escape
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeModal();
-        });
+                {id: "recovery-wb-10d", title: "Recovery Western blots (PLP/MBP/MAG at 10d)", week: 2, completed: false, priority: "critical", figure: "4",
+                 notes: "Fresh tissue needed. Run all 3 antibodies. 1-2 weeks experiment + analysis.", blockedBy: []},
+                {id: "examine-20d-em", title: "Examine 20d recovery EM: lipofuscin, glycogen, dark microglia", week: 2, completed: false, priority: "high", figure: "5",
+                 notes: "Systematic EM survey of 20d recovery tissue. Are dark microglia gone? Glycogen present?", blockedBy: []},
 
-        function getDefaultData() {
-            return {
-                project_start: "2026-01-17",
-                deadline: "2026-03-17",
-                tasks: [
-                    {id: "mag-quant", title: "Quantify MAG Western blot", week: 1, completed: false, priority: "high", figure: 2, notes: ""},
-                    {id: "cut-sections", title: "Cut IHC sections", week: 1, completed: false, priority: "medium", figure: 3, notes: ""},
-                    {id: "prep-massspec", title: "Prepare mass spec samples", week: 1, completed: false, priority: "critical", figure: 2, notes: ""},
-                    {id: "send-massspec", title: "Send to mass spec core", week: 1, completed: false, priority: "critical", figure: 2, notes: "BOTTLENECK"},
-                    {id: "olig2-stain", title: "Olig2/CC1 IHC staining", week: 2, completed: false, priority: "high", figure: 3, notes: ""},
-                    {id: "degenerotag", title: "DegeneroTag staining", week: 2, completed: false, priority: "high", figure: 3, notes: ""},
-                    {id: "ihc-imaging", title: "Image IHC sections", week: 3, completed: false, priority: "medium", figure: 3, notes: ""},
-                    {id: "ihc-quant-start", title: "Begin IHC quantification", week: 3, completed: false, priority: "medium", figure: 3, notes: ""},
-                    {id: "recovery-plp", title: "Recovery WB: PLP", week: 4, completed: false, priority: "high", figure: 4, notes: ""},
-                    {id: "recovery-mag", title: "Recovery WB: MAG", week: 4, completed: false, priority: "high", figure: 4, notes: ""},
-                    {id: "recovery-quant", title: "Quantify recovery WBs", week: 4, completed: false, priority: "medium", figure: 4, notes: ""},
-                    {id: "recovery-stats", title: "Recovery statistics", week: 4, completed: false, priority: "medium", figure: 4, notes: ""},
-                    {id: "ihc-quant-complete", title: "Complete IHC quantification", week: 5, completed: false, priority: "high", figure: 3, notes: ""},
-                    {id: "massspec-analyze", title: "Analyze mass spec results", week: 5, completed: false, priority: "high", figure: 2, notes: ""},
-                    {id: "all-stats", title: "All statistical analyses", week: 5, completed: false, priority: "high", figure: null, notes: ""},
-                    {id: "fig1-final", title: "Finalize Figure 1", week: 6, completed: false, priority: "high", figure: 1, notes: ""},
-                    {id: "fig2-final", title: "Finalize Figure 2", week: 6, completed: false, priority: "high", figure: 2, notes: ""},
-                    {id: "fig3-final", title: "Finalize Figure 3", week: 7, completed: false, priority: "high", figure: 3, notes: ""},
-                    {id: "fig4-final", title: "Finalize Figure 4", week: 7, completed: false, priority: "high", figure: 4, notes: ""},
-                    {id: "write-legends", title: "Write figure legends", week: 7, completed: false, priority: "medium", figure: null, notes: ""},
-                    {id: "write-manuscript", title: "Complete manuscript", week: 8, completed: false, priority: "critical", figure: null, notes: ""},
-                    {id: "coauthor-review", title: "Co-author review", week: 8, completed: false, priority: "high", figure: null, notes: ""},
-                    {id: "submit", title: "SUBMIT PAPER", week: 8, completed: false, priority: "critical", figure: null, notes: ""}
-                ],
-                figures: [
-                    {id: 1, title: "EM Phenotype", status: "complete"},
-                    {id: 2, title: "Proteins + Lipids", status: "in_progress"},
-                    {id: 3, title: "Cellular Response", status: "not_started"},
-                    {id: 4, title: "Recovery Failure", status: "partial"}
-                ],
-                results: [],
-                chat_history: []
-            };
-        }
+                // ===== WEEK 3-4: Recovery Characterization =====
+                {id: "recovery-wb-10d-analysis", title: "Complete 10d recovery WB analysis", week: 3, completed: false, priority: "critical", figure: "4",
+                 notes: "Densitometry + stats for 10d recovery Western blots.", blockedBy: ["recovery-wb-10d"]},
+                {id: "recovery-wb-20d", title: "Recovery Western blots at 20d (PLP/MBP/MAG)", week: 3, completed: false, priority: "high", figure: "5",
+                 notes: "Fresh 20d recovery tissue. Shows if protein levels normalize with remyelination.", blockedBy: []},
+                {id: "olig2-cc1-ihc", title: "Olig2/CC1 IHC staining (oligodendrocyte survival)", week: 3, completed: false, priority: "high", figure: "4",
+                 notes: "Key reviewer question: do oligodendrocytes survive SD? ~2 weeks for full protocol.", blockedBy: []},
+                {id: "lipofuscin-finalize", title: "Finalize lipofuscin analysis", week: 3, completed: false, priority: "high", figure: "3",
+                 notes: "Complete quantification and statistics.", blockedBy: ["lipofuscin-quant"]},
+
+                {id: "recovery-wb-20d-analysis", title: "Complete 20d recovery WB analysis", week: 4, completed: false, priority: "high", figure: "5",
+                 notes: "Densitometry + stats for 20d recovery Western blots.", blockedBy: ["recovery-wb-20d"]},
+                {id: "begin-figure-assembly", title: "Begin figure assembly in Illustrator/Prism", week: 4, completed: false, priority: "medium", figure: null,
+                 notes: "Start layouts for all 5 main figures.", blockedBy: []},
+
+                // ===== WEEK 5-6: Oligodendrocyte Data + Figure Assembly =====
+                {id: "olig-counts", title: "Complete oligodendrocyte counts (all timepoints)", week: 5, completed: false, priority: "high", figure: "4",
+                 notes: "Count Olig2+ and CC1+ cells: control, SD, 10d rec, 20d rec.", blockedBy: ["olig2-cc1-ihc"]},
+                {id: "finalize-all-stats", title: "Finalize all quantifications and statistics", week: 5, completed: false, priority: "high", figure: null,
+                 notes: "Final pass on ALL data. Ensure N's adequate for Nature. Effect sizes, P-values.", blockedBy: []},
+                {id: "assemble-fig1", title: "Assemble Figure 1 (EM Phenotype)", week: 5, completed: false, priority: "high", figure: "1",
+                 notes: "Figure 1 data is complete. Final Illustrator layout + panel labels.", blockedBy: []},
+                {id: "assemble-fig2", title: "Assemble Figure 2 (Myelin Proteins)", week: 5, completed: false, priority: "high", figure: "2",
+                 notes: "PLP, MAG, MBP panels + schematic.", blockedBy: ["mag-densitometry"]},
+
+                {id: "assemble-fig3", title: "Assemble Figure 3 (Lipofuscin)", week: 6, completed: false, priority: "high", figure: "3",
+                 notes: "EM panels + quantification graph.", blockedBy: ["lipofuscin-finalize"]},
+                {id: "assemble-fig4", title: "Assemble Figure 4 (Recovery 10d)", week: 6, completed: false, priority: "high", figure: "4",
+                 notes: "Debris clearance, dark microglia, glycogen, WB data, olig counts.", blockedBy: ["recovery-wb-10d-analysis", "olig-counts"]},
+                {id: "assemble-fig5", title: "Assemble Figure 5 (Remyelination 20d)", week: 6, completed: false, priority: "high", figure: "5",
+                 notes: "Thin sheaths EM, g-ratio plot, axon proportion timeline.", blockedBy: ["gratio-20d", "axon-counts-20d", "recovery-wb-20d-analysis", "examine-20d-em"]},
+                {id: "fill-refs", title: "Fill in all (Refs) placeholders", week: 6, completed: false, priority: "high", figure: "manuscript",
+                 notes: "11 (Refs) placeholders throughout Introduction, Results, Discussion, Methods.", blockedBy: []},
+                {id: "write-legends", title: "Write figure legends (Figs 1-5)", week: 6, completed: false, priority: "high", figure: "manuscript",
+                 notes: "No legends exist yet. Major missing component for submission.", blockedBy: []},
+
+                // ===== WEEK 7: Manuscript Finalization =====
+                {id: "complete-draft", title: "Complete final manuscript draft with all data", week: 7, completed: false, priority: "critical", figure: "manuscript",
+                 notes: "Integrate all quantitative data, fill ~15 Methods blanks (antibodies, N's, stats).",
+                 blockedBy: ["assemble-fig1", "assemble-fig2", "assemble-fig3", "assemble-fig4", "assemble-fig5", "fill-refs", "write-legends"]},
+                {id: "methods-details", title: "Fill in Methods details (antibodies, N's, stats)", week: 7, completed: false, priority: "high", figure: "manuscript",
+                 notes: "[N] mice per group, [anaesthetic], [antibody sources], Prism version, etc.", blockedBy: []},
+                {id: "extended-data", title: "Write Extended Data figures & legends", week: 7, completed: false, priority: "medium", figure: "extended",
+                 notes: "Supplementary figures if any additional data generated.", blockedBy: []},
+                {id: "reporting-summary", title: "Nature Reporting Summary", week: 7, completed: false, priority: "medium", figure: "manuscript",
+                 notes: "Required checklist for Nature submission.", blockedBy: []},
+                {id: "dragana-review", title: "Internal review with Dragana", week: 7, completed: false, priority: "critical", figure: "manuscript",
+                 notes: "Send complete draft to Dragana for PI review.", blockedBy: ["complete-draft"]},
+
+                // ===== WEEK 8: Submission =====
+                {id: "address-comments", title: "Address Dragana's final comments", week: 8, completed: false, priority: "critical", figure: "manuscript",
+                 notes: "Revise based on PI feedback.", blockedBy: ["dragana-review"]},
+                {id: "cover-letter", title: "Write cover letter for Nature", week: 8, completed: false, priority: "medium", figure: "manuscript",
+                 notes: "Highlight novelty: first EM evidence of SD-induced demyelination + remyelination.", blockedBy: []},
+                {id: "data-deposition", title: "Data deposition", week: 8, completed: false, priority: "medium", figure: "manuscript",
+                 notes: "Deposit raw data as required by Nature.", blockedBy: []},
+                {id: "format-submission", title: "Format for Nature submission", week: 8, completed: false, priority: "high", figure: "manuscript",
+                 notes: "Final formatting: title page, abstract word count, figure file specs.", blockedBy: []},
+                {id: "submit", title: "SUBMIT TO NATURE", week: 8, completed: false, priority: "critical", figure: "manuscript",
+                 notes: "Target: end of Week 8 (April 5, 2026).",
+                 blockedBy: ["address-comments", "cover-letter", "format-submission", "data-deposition"]},
+
+                // ===== NICE-TO-HAVE (Extended Data) =====
+                {id: "mass-spec", title: "Mass spectrometry (lipid profiling)", week: 4, completed: false, priority: "medium", figure: "extended",
+                 notes: "3-4 weeks total. Send to core facility. Nice-to-have for extended data.", blockedBy: []},
+                {id: "female-replication", title: "Female mice replication cohort", week: 5, completed: false, priority: "medium", figure: "extended",
+                 notes: "Dragana suggested. 6-8 weeks. May be better for revision rather than initial submission.", blockedBy: []},
+                {id: "degenerotag", title: "DegeneroTag neurodegeneration assessment", week: 5, completed: false, priority: "low", figure: "extended",
+                 notes: "2-3 weeks. Shows neurons aren't degenerating (supports demyelination specificity).", blockedBy: []}
+            ],
+            chat_history: []
+        };
+    }
     </script>
 </body>
 </html>
