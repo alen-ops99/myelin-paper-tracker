@@ -750,7 +750,7 @@
     <script>
     // ==================== CONSTANTS ====================
     const STORAGE_KEY = 'myelin-paper-tracker';
-    const DATA_VERSION = 2;
+    const DATA_VERSION = 3;
 
     const FIGURE_DEFS = {
         '1': { title: 'Figure 1: EM Phenotype (SD vs Control)', short: 'Fig 1' },
@@ -1450,92 +1450,101 @@
     function getDefaultData() {
         return {
             dataVersion: DATA_VERSION,
-            project_start: "2026-02-09",
-            deadline: "2026-04-05",
+            project_start: "2026-02-17",
+            deadline: "2026-04-13",
             totalWeeks: 8,
             tasks: [
-                // ===== WEEK 1-2: Critical Quantification =====
+                // ===== WEEK 1 (Feb 17-23): Quantification at the microscope + IHC start =====
                 {id: "gratio-20d", title: "g-ratio quantification (20d recovery)", week: 1, completed: false, priority: "critical", figure: "5",
-                 notes: "Measure g-ratios for ~100+ axons per animal at 20d recovery. Core EM images exist.", blockedBy: []},
+                 notes: "Measure g-ratios for ~100+ axons per animal at 20d recovery. Core EM images exist. Computer work.", blockedBy: []},
                 {id: "axon-counts-20d", title: "Myelinated axon counts at 20d recovery", week: 1, completed: false, priority: "critical", figure: "5",
-                 notes: "Count myelinated axon proportion: control vs SD vs 10d vs 20d recovery.", blockedBy: []},
+                 notes: "Count myelinated axon proportion: control vs SD vs 10d vs 20d recovery. Computer work.", blockedBy: []},
                 {id: "mag-densitometry", title: "MAG densitometry + statistical analysis", week: 1, completed: false, priority: "high", figure: "2",
-                 notes: "Finalize Western blot densitometry for MAG. Run stats.", blockedBy: []},
+                 notes: "Finalize Western blot densitometry for MAG. Run stats. Computer work.", blockedBy: []},
                 {id: "lipofuscin-quant", title: "Lipofuscin quantification", week: 1, completed: false, priority: "high", figure: "3",
-                 notes: "Count lipofuscin granules per neuronal soma. Check if already partially done.", blockedBy: []},
+                 notes: "Count lipofuscin granules per neuronal soma. Check if already partially done. Computer work.", blockedBy: []},
+                {id: "olig2-cc1-ihc", title: "Olig2/CC1 IHC staining (all 4 timepoints)", week: 1, completed: false, priority: "critical", figure: "4",
+                 notes: "Stain: Control, SD, 10d rec, 20d rec. Key question: do oligodendrocytes survive SD? Start sectioning + staining Day 1. ~2 weeks for full protocol.", blockedBy: []},
+                {id: "iba1-ihc", title: "Iba1 IHC staining (all 4 timepoints)", week: 1, completed: false, priority: "high", figure: "4",
+                 notes: "Stain: Control, SD, 10d rec, 20d rec. Confirms dark microglia EM finding with standard marker. Run in parallel with Olig2/CC1 — same tissue blocks, different sections.", blockedBy: []},
 
+                // ===== WEEK 2 (Feb 24 - Mar 2): Recovery WBs + EM survey + continue IHC =====
                 {id: "recovery-wb-10d", title: "Recovery Western blots (PLP/MBP/MAG at 10d)", week: 2, completed: false, priority: "critical", figure: "4",
-                 notes: "Fresh tissue needed. Run all 3 antibodies. 1-2 weeks experiment + analysis.", blockedBy: []},
+                 notes: "Need protein extracts from 10d recovery tissue. Run all 3 antibodies.", blockedBy: []},
                 {id: "examine-20d-em", title: "Examine 20d recovery EM: lipofuscin, glycogen, dark microglia", week: 2, completed: false, priority: "high", figure: "5",
-                 notes: "Systematic EM survey of 20d recovery tissue. Are dark microglia gone? Glycogen present?", blockedBy: []},
+                 notes: "Systematic EM survey of 20d recovery tissue. Are dark microglia resolved? Glycogen still present? Lipofuscin status?", blockedBy: []},
+                {id: "cd68-staining", title: "CD68 phagocytosis marker (10d recovery)", week: 2, completed: false, priority: "medium", figure: "4",
+                 notes: "Confirms microglia actively phagocytosing myelin (not just morphologically dark). Co-stain with MBP if possible. Strongly recommended for Nature.", blockedBy: []},
 
-                // ===== WEEK 3-4: Recovery Characterization =====
+                // ===== WEEK 3 (Mar 3-9): IHC imaging + WB analysis =====
+                {id: "olig-imaging-counts", title: "Image + count Olig2/CC1 sections (all timepoints)", week: 3, completed: false, priority: "critical", figure: "4",
+                 notes: "Count Olig2+ (all oligo lineage) and CC1+ (mature oligos) at Control, SD, 10d, 20d. Key result: do mature oligos survive SD?", blockedBy: ["olig2-cc1-ihc"]},
+                {id: "iba1-imaging-counts", title: "Image + count Iba1 sections (all timepoints)", week: 3, completed: false, priority: "high", figure: "4",
+                 notes: "Count Iba1+ cells, assess morphology (ramified vs amoeboid). Expected: quiescent at SD, activated at 10d recovery, resolved at 20d.", blockedBy: ["iba1-ihc"]},
                 {id: "recovery-wb-10d-analysis", title: "Complete 10d recovery WB analysis", week: 3, completed: false, priority: "critical", figure: "4",
                  notes: "Densitometry + stats for 10d recovery Western blots.", blockedBy: ["recovery-wb-10d"]},
                 {id: "recovery-wb-20d", title: "Recovery Western blots at 20d (PLP/MBP/MAG)", week: 3, completed: false, priority: "high", figure: "5",
-                 notes: "Fresh 20d recovery tissue. Shows if protein levels normalize with remyelination.", blockedBy: []},
-                {id: "olig2-cc1-ihc", title: "Olig2/CC1 IHC staining (oligodendrocyte survival)", week: 3, completed: false, priority: "high", figure: "4",
-                 notes: "Key reviewer question: do oligodendrocytes survive SD? ~2 weeks for full protocol.", blockedBy: []},
+                 notes: "Need 20d recovery protein extracts. Shows if protein levels normalize with remyelination.", blockedBy: []},
                 {id: "lipofuscin-finalize", title: "Finalize lipofuscin analysis", week: 3, completed: false, priority: "high", figure: "3",
                  notes: "Complete quantification and statistics.", blockedBy: ["lipofuscin-quant"]},
 
+                // ===== WEEK 4 (Mar 10-16): Finalize all experimental data =====
                 {id: "recovery-wb-20d-analysis", title: "Complete 20d recovery WB analysis", week: 4, completed: false, priority: "high", figure: "5",
                  notes: "Densitometry + stats for 20d recovery Western blots.", blockedBy: ["recovery-wb-20d"]},
+                {id: "finalize-all-stats", title: "Finalize all quantifications and statistics", week: 4, completed: false, priority: "high", figure: null,
+                 notes: "Final pass on ALL data. Ensure N's adequate for Nature. Effect sizes, P-values for every comparison.", blockedBy: []},
                 {id: "begin-figure-assembly", title: "Begin figure assembly in Illustrator/Prism", week: 4, completed: false, priority: "medium", figure: null,
-                 notes: "Start layouts for all 5 main figures.", blockedBy: []},
+                 notes: "Start layouts for all 5 main figures. Organize panels.", blockedBy: []},
 
-                // ===== WEEK 5-6: Oligodendrocyte Data + Figure Assembly =====
-                {id: "olig-counts", title: "Complete oligodendrocyte counts (all timepoints)", week: 5, completed: false, priority: "high", figure: "4",
-                 notes: "Count Olig2+ and CC1+ cells: control, SD, 10d rec, 20d rec.", blockedBy: ["olig2-cc1-ihc"]},
-                {id: "finalize-all-stats", title: "Finalize all quantifications and statistics", week: 5, completed: false, priority: "high", figure: null,
-                 notes: "Final pass on ALL data. Ensure N's adequate for Nature. Effect sizes, P-values.", blockedBy: []},
+                // ===== WEEK 5 (Mar 17-23): Figure Assembly =====
                 {id: "assemble-fig1", title: "Assemble Figure 1 (EM Phenotype)", week: 5, completed: false, priority: "high", figure: "1",
                  notes: "Figure 1 data is complete. Final Illustrator layout + panel labels.", blockedBy: []},
                 {id: "assemble-fig2", title: "Assemble Figure 2 (Myelin Proteins)", week: 5, completed: false, priority: "high", figure: "2",
-                 notes: "PLP, MAG, MBP panels + schematic.", blockedBy: ["mag-densitometry"]},
-
-                {id: "assemble-fig3", title: "Assemble Figure 3 (Lipofuscin)", week: 6, completed: false, priority: "high", figure: "3",
+                 notes: "PLP WB + ELISA, MAG WB, MBP WB, protein schematic.", blockedBy: ["mag-densitometry"]},
+                {id: "assemble-fig3", title: "Assemble Figure 3 (Lipofuscin)", week: 5, completed: false, priority: "high", figure: "3",
                  notes: "EM panels + quantification graph.", blockedBy: ["lipofuscin-finalize"]},
-                {id: "assemble-fig4", title: "Assemble Figure 4 (Recovery 10d)", week: 6, completed: false, priority: "high", figure: "4",
-                 notes: "Debris clearance, dark microglia, glycogen, WB data, olig counts.", blockedBy: ["recovery-wb-10d-analysis", "olig-counts"]},
-                {id: "assemble-fig5", title: "Assemble Figure 5 (Remyelination 20d)", week: 6, completed: false, priority: "high", figure: "5",
-                 notes: "Thin sheaths EM, g-ratio plot, axon proportion timeline.", blockedBy: ["gratio-20d", "axon-counts-20d", "recovery-wb-20d-analysis", "examine-20d-em"]},
-                {id: "fill-refs", title: "Fill in all (Refs) placeholders", week: 6, completed: false, priority: "high", figure: "manuscript",
+                {id: "assemble-fig4", title: "Assemble Figure 4 (Recovery & Cellular Response)", week: 5, completed: false, priority: "high", figure: "4",
+                 notes: "Debris clearance EM, dark microglia EM, Iba1 IHC counts, CD68, glycogen, recovery WBs, Olig2/CC1 counts. This is the big figure.", blockedBy: ["recovery-wb-10d-analysis", "olig-imaging-counts", "iba1-imaging-counts"]},
+                {id: "assemble-fig5", title: "Assemble Figure 5 (Remyelination 20d)", week: 5, completed: false, priority: "high", figure: "5",
+                 notes: "Thin sheaths EM, g-ratio plot, axon proportion across all 4 conditions, 20d recovery WBs.", blockedBy: ["gratio-20d", "axon-counts-20d", "recovery-wb-20d-analysis", "examine-20d-em"]},
+                {id: "fill-refs", title: "Fill in all (Refs) placeholders", week: 5, completed: false, priority: "high", figure: "manuscript",
                  notes: "11 (Refs) placeholders throughout Introduction, Results, Discussion, Methods.", blockedBy: []},
-                {id: "write-legends", title: "Write figure legends (Figs 1-5)", week: 6, completed: false, priority: "high", figure: "manuscript",
-                 notes: "No legends exist yet. Major missing component for submission.", blockedBy: []},
+                {id: "write-legends", title: "Write figure legends (Figs 1-5)", week: 5, completed: false, priority: "high", figure: "manuscript",
+                 notes: "No legends exist yet. Major missing component. Write alongside figure assembly.", blockedBy: []},
 
-                // ===== WEEK 7: Manuscript Finalization =====
-                {id: "complete-draft", title: "Complete final manuscript draft with all data", week: 7, completed: false, priority: "critical", figure: "manuscript",
-                 notes: "Integrate all quantitative data, fill ~15 Methods blanks (antibodies, N's, stats).",
+                // ===== WEEK 6 (Mar 24-30): Complete Manuscript Draft =====
+                {id: "complete-draft", title: "Complete final manuscript draft with all data", week: 6, completed: false, priority: "critical", figure: "manuscript",
+                 notes: "Integrate all quantitative data, fill ~15 Methods blanks. Add oligo/microglia IHC results to text.",
                  blockedBy: ["assemble-fig1", "assemble-fig2", "assemble-fig3", "assemble-fig4", "assemble-fig5", "fill-refs", "write-legends"]},
-                {id: "methods-details", title: "Fill in Methods details (antibodies, N's, stats)", week: 7, completed: false, priority: "high", figure: "manuscript",
-                 notes: "[N] mice per group, [anaesthetic], [antibody sources], Prism version, etc.", blockedBy: []},
-                {id: "extended-data", title: "Write Extended Data figures & legends", week: 7, completed: false, priority: "medium", figure: "extended",
-                 notes: "Supplementary figures if any additional data generated.", blockedBy: []},
-                {id: "reporting-summary", title: "Nature Reporting Summary", week: 7, completed: false, priority: "medium", figure: "manuscript",
+                {id: "methods-details", title: "Fill in Methods details (antibodies, N's, stats)", week: 6, completed: false, priority: "high", figure: "manuscript",
+                 notes: "[N] mice per group, [anaesthetic], [antibody sources], Prism version, IHC protocol details.", blockedBy: []},
+                {id: "extended-data", title: "Write Extended Data figures & legends", week: 6, completed: false, priority: "medium", figure: "extended",
+                 notes: "Supplementary figures (e.g., additional EM timepoints, mass spec if done).", blockedBy: []},
+                {id: "reporting-summary", title: "Nature Reporting Summary", week: 6, completed: false, priority: "medium", figure: "manuscript",
                  notes: "Required checklist for Nature submission.", blockedBy: []},
+
+                // ===== WEEK 7 (Mar 31 - Apr 6): PI Review =====
                 {id: "dragana-review", title: "Internal review with Dragana", week: 7, completed: false, priority: "critical", figure: "manuscript",
                  notes: "Send complete draft to Dragana for PI review.", blockedBy: ["complete-draft"]},
+                {id: "cover-letter", title: "Write cover letter for Nature", week: 7, completed: false, priority: "medium", figure: "manuscript",
+                 notes: "Highlight novelty: first EM evidence of SD-induced demyelination + recovery timeline with cellular characterization.", blockedBy: []},
+                {id: "data-deposition", title: "Data deposition", week: 7, completed: false, priority: "medium", figure: "manuscript",
+                 notes: "Deposit raw data as required by Nature.", blockedBy: []},
 
-                // ===== WEEK 8: Submission =====
+                // ===== WEEK 8 (Apr 7-13): Finalize + Submit =====
                 {id: "address-comments", title: "Address Dragana's final comments", week: 8, completed: false, priority: "critical", figure: "manuscript",
                  notes: "Revise based on PI feedback.", blockedBy: ["dragana-review"]},
-                {id: "cover-letter", title: "Write cover letter for Nature", week: 8, completed: false, priority: "medium", figure: "manuscript",
-                 notes: "Highlight novelty: first EM evidence of SD-induced demyelination + remyelination.", blockedBy: []},
-                {id: "data-deposition", title: "Data deposition", week: 8, completed: false, priority: "medium", figure: "manuscript",
-                 notes: "Deposit raw data as required by Nature.", blockedBy: []},
                 {id: "format-submission", title: "Format for Nature submission", week: 8, completed: false, priority: "high", figure: "manuscript",
                  notes: "Final formatting: title page, abstract word count, figure file specs.", blockedBy: []},
                 {id: "submit", title: "SUBMIT TO NATURE", week: 8, completed: false, priority: "critical", figure: "manuscript",
-                 notes: "Target: end of Week 8 (April 5, 2026).",
+                 notes: "Target: end of Week 8 (April 13, 2026).",
                  blockedBy: ["address-comments", "cover-letter", "format-submission", "data-deposition"]},
 
                 // ===== NICE-TO-HAVE (Extended Data) =====
                 {id: "mass-spec", title: "Mass spectrometry (lipid profiling)", week: 4, completed: false, priority: "medium", figure: "extended",
                  notes: "3-4 weeks total. Send to core facility. Nice-to-have for extended data.", blockedBy: []},
                 {id: "female-replication", title: "Female mice replication cohort", week: 5, completed: false, priority: "medium", figure: "extended",
-                 notes: "Dragana suggested. 6-8 weeks. May be better for revision rather than initial submission.", blockedBy: []},
+                 notes: "Dragana suggested. 6-8 weeks. Better for revision rather than initial submission.", blockedBy: []},
                 {id: "degenerotag", title: "DegeneroTag neurodegeneration assessment", week: 5, completed: false, priority: "low", figure: "extended",
                  notes: "2-3 weeks. Shows neurons aren't degenerating (supports demyelination specificity).", blockedBy: []}
             ],

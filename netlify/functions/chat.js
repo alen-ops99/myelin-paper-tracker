@@ -23,8 +23,8 @@ After 20-day recovery sleep:
 - Figure 1: EM Phenotype (SD vs Control) — COMPLETE. Panels A-G.
 - Figure 2: Myelin Protein Changes — MAG densitometry pending. Panels A-D.
 - Figure 3: Lipofuscin — Quantification may be needed. Panels A-D.
-- Figure 4: Recovery Phase (10-day) — Needs recovery WBs, olig counts. Panels A-F.
-- Figure 5: Remyelination (20-day recovery) — NEW. Needs g-ratio, axon counts, 20d EM survey. Panels A-E.
+- Figure 4: Recovery & Cellular Response (10-day) — Needs recovery WBs, Olig2/CC1 counts, Iba1 microglia counts, CD68 phagocytosis. Panels A-F+.
+- Figure 5: Remyelination (20-day recovery) — Needs g-ratio, axon counts, 20d EM survey, 20d recovery WBs. Panels A-E.
 
 ## Manuscript Status
 - Draft exists with complete narrative (Introduction through Discussion)
@@ -34,12 +34,15 @@ After 20-day recovery sleep:
 - Missing: ~15 blanks in Methods ([N] sample sizes, antibody sources, anaesthetic, Prism version)
 - Missing: author list, affiliations, acknowledgements, competing interests
 
-## 8-Week Sprint Timeline (Feb 9 - Apr 5, 2026)
-- Weeks 1-2: Critical quantification (g-ratio, axon counts, MAG stats, recovery WBs)
-- Weeks 3-4: Recovery characterization (WB analysis, Olig2/CC1 IHC, lipofuscin)
-- Weeks 5-6: Figure assembly + manuscript writing (fill refs, write legends)
-- Week 7: Manuscript finalization + Dragana review
-- Week 8: Address comments, cover letter, SUBMIT
+## 8-Week Sprint Timeline (Feb 17 - Apr 13, 2026)
+- Week 1: EM quantification at computer (g-ratio, axon counts, MAG, lipofuscin) + START Olig2/CC1 and Iba1 IHC staining
+- Week 2: Recovery Western blots (10d), 20d EM survey, CD68 staining
+- Week 3: IHC imaging + counts (Olig2/CC1, Iba1), WB analysis, recovery WBs (20d)
+- Week 4: Finalize all experimental data + statistics
+- Week 5: Figure assembly (Figs 1-5) + write legends + fill references
+- Week 6: Complete manuscript draft + Methods details
+- Week 7: Dragana review + cover letter + data deposition
+- Week 8: Address comments, format, SUBMIT
 
 ## Key Reviewer Concerns to Anticipate
 1. "Is this demyelination or just fixation artifact?" — Need consistent EM across many animals/experiments
@@ -72,7 +75,7 @@ Actions available:
 - "add": Add new task. Include "title", "week", "priority", "figure".
 - "delete": Remove a task. Include "task_id".
 
-Task IDs in the system: gratio-20d, axon-counts-20d, mag-densitometry, lipofuscin-quant, recovery-wb-10d, examine-20d-em, recovery-wb-10d-analysis, recovery-wb-20d, olig2-cc1-ihc, lipofuscin-finalize, recovery-wb-20d-analysis, begin-figure-assembly, olig-counts, finalize-all-stats, assemble-fig1, assemble-fig2, assemble-fig3, assemble-fig4, assemble-fig5, fill-refs, write-legends, complete-draft, methods-details, extended-data, reporting-summary, dragana-review, address-comments, cover-letter, data-deposition, format-submission, submit, mass-spec, female-replication, degenerotag
+Task IDs in the system: gratio-20d, axon-counts-20d, mag-densitometry, lipofuscin-quant, olig2-cc1-ihc, iba1-ihc, recovery-wb-10d, examine-20d-em, cd68-staining, olig-imaging-counts, iba1-imaging-counts, recovery-wb-10d-analysis, recovery-wb-20d, lipofuscin-finalize, recovery-wb-20d-analysis, finalize-all-stats, begin-figure-assembly, assemble-fig1, assemble-fig2, assemble-fig3, assemble-fig4, assemble-fig5, fill-refs, write-legends, complete-draft, methods-details, extended-data, reporting-summary, dragana-review, cover-letter, data-deposition, address-comments, format-submission, submit, mass-spec, female-replication, degenerotag
 
 Always be specific about which tasks to modify and output the task_update blocks so the system can automatically apply changes.`;
 
